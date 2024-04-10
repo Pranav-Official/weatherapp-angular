@@ -9,7 +9,7 @@
     <div class="weather-widgets wid3 rounded-xl">
       <app-single-info
         imageUrl="../../../assets/icons/wind-speed.png"
-        text="5 KM/H"
+        text="5 km/h"
       ></app-single-info>
     </div>
     <div class="weather-widgets wid4 rounded-xl">
@@ -18,8 +18,20 @@
         text="36%"
       ></app-single-info>
     </div>
-    <div class="weather-widgets wid5 rounded-xl"></div>
-    <div class="weather-widgets wid6 rounded-xl"></div>
+    <div class="weather-widgets wid5 rounded-xl">
+      <app-single-info-label
+        iconUrl="../../../assets/icons/uv.png"
+        label="UV Index "
+        result="12"
+      ></app-single-info-label>
+    </div>
+    <div class="weather-widgets wid6 rounded-xl">
+      <app-single-info-label
+        iconUrl="../../../assets/icons/air-quality.png"
+        label="Air Quality"
+        result="Poor"
+      ></app-single-info-label>
+    </div>
     <div class="weather-widgets wid7 rounded-xl"></div>
   </div>
 </div>
