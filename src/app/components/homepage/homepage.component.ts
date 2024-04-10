@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TemperatureWidgetComponent } from '../temperature-widget/temperature-widget.component';
+import { MapWidgetComponent } from '../map-widget/map-widget.component';
 import { SingleInfoComponent } from '../single-info/single-info.component';
 import { SingleInfoLabelComponent } from '../single-info-label/single-info-label.component';
 
@@ -7,6 +9,6 @@ import { SingleInfoLabelComponent } from '../single-info-label/single-info-label
   standalone: true,
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
-  imports: [SingleInfoComponent, SingleInfoLabelComponent],
+  imports: [SingleInfoComponent, SingleInfoLabelComponent,TemperatureWidgetComponent, MapWidgetComponent],
 })
 export class HomepageComponent {}
