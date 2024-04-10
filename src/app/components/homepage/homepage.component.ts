@@ -8,7 +8,6 @@ import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-pos
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
   imports: [
