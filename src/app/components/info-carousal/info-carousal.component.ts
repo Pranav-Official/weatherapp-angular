@@ -1,11 +1,11 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, fromEvent } from 'rxjs';
-
+import { CarouselInfoTileComponent } from '../carousel-info-tile/carousel-info-tile.component';
 @Component({
   selector: 'app-info-carousal',
   standalone: true,
-  imports: [],
+  imports: [CarouselInfoTileComponent],
   templateUrl: './info-carousal.component.html',
   styleUrl: './info-carousal.component.css',
 })
