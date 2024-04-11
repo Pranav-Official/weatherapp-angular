@@ -1,0 +1,43 @@
+.carousel {
+  gap: 1%;
+  height: 40vh;
+}
+
+.carousel-item {
+  width: 14.2%;
+}
+
+.carousel-button {
+  height: 32vh;
+  width: 4%;
+}
+
+@media screen and (max-width: 850px) {
+  .carousel-item {
+    width: 21%;
+  }
+  .carousel-button {
+    width: 6%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .carousel-item {
+    width: 27%;
+  }
+  .carousel-button {
+    width: 8%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .carousel {
+    gap: 3%;
+  }
+  .carousel-item {
+    width: 36%;
+  }
+  .carousel-button {
+    width: 8%;
+  }
+}

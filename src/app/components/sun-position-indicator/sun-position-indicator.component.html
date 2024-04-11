@@ -1,14 +1,24 @@
 <div class="sun-position-indicator h-full w-full m-4 flex flex-col">
   <div class="sunrise-time flex flex-row">
     <img src="../../../assets/icons/Up arrow.png" class="w-8" alt="" />
-    <p class="sunrise-time-text text-3xl">6:17 AM</p>
+    <p class="sunrise-time-text text-3xl">{{ sunriseTimeText }}</p>
   </div>
   <div
     class="sun-position-indicator-container h-1/2 flex flex-row pe-8 items-center"
   >
-    <div class="h-0 w-1/2 border-t-4 border-primary border-solid"></div>
-    <img src="./../assets/icons/Sunny Day.png" class="w-16" alt="" />
-    <div class="h-0 w-1/2 border-t-4 border-primary border-dashed"></div>
+    <div
+      class="sun-progress h-0 border-t-4 border-primary border-solid"
+      [style]="{ flex: sunProgress }"
+    ></div>
+    <img
+      src="./../assets/icons/Sunny Day.png"
+      class="w-16 sunIndicator"
+      alt=""
+    />
+    <div
+      class="sun-remaining h-0 border-t-4 border-primary border-dashed"
+      [style]="{ flex: 100 - sunProgress }"
+    ></div>
   </div>
   <div class="sunrise-time flex w-full flex-row-reverse pe-6">
     <img
@@ -16,6 +26,6 @@
       class="w-8 rotate-180"
       alt=""
     />
-    <p class="sunrise-time-text text-3xl">6:45 PM</p>
+    <p class="sunrise-time-text text-3xl">{{ sunsetTimeText }}</p>
   </div>
 </div>

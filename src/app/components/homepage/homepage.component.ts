@@ -4,6 +4,7 @@ import { MapWidgetComponent } from '../map-widget/map-widget.component';
 import { SingleInfoComponent } from '../single-info/single-info.component';
 import { SingleInfoLabelComponent } from '../single-info-label/single-info-label.component';
 import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-position-indicator.component';
+import { InfoCarousalComponent } from '../info-carousal/info-carousal.component';
 
 @Component({
   selector: 'app-homepage',
@@ -16,6 +17,7 @@ import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-pos
     TemperatureWidgetComponent,
     MapWidgetComponent,
     SunPositionIndicatorComponent,
+    InfoCarousalComponent,
   ],
 })
 export class HomepageComponent {}
