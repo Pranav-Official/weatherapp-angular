@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
+  @Input() showDropdown = false;
 
+  onSearchKeyUp(event: KeyboardEvent) {
+    this.showDropdown = true;
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.value === '') {
+      this.showDropdown = false;
+    }
+  }
+
+  onSearchBlur() {
+    this.showDropdown = false;
+  }
 }

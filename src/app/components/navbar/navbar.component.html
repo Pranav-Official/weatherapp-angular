@@ -1,18 +1,32 @@
-<div class="navbar bg-neutral">
+<div class="flex navbar bg-neutral">
   <div class="flex-1">
     <a class="btn btn-ghost text-2xl uppercase">
       <img src="./../assets/icons/Sunny Day.png" class="w-10" alt="" />
       Weather Now
     </a>
   </div>
-  <div class="flex-none gap-2">
-    <div class="form-control">
-      <input
-        type="text"
-        placeholder="Search"
-        class="input input-sm input-bordered border-2 w-24 md:w-auto"
-      />
+  <div class="form-control">
+    <div class="flex flex-row gap-2">
+      <div class="flex flex-col">
+        <input
+          type="text"
+          placeholder="Search"
+          (keyup)="onSearchKeyUp($event)"
+          (blur)="onSearchBlur()"
+          class="input input-sm input-bordered border-2 w-24 md:w-auto"
+          id="searchInput"
+        />
+        @if(showDropdown){
+        <ul
+          class="menu dropdown-content bg-base-100 rounded-box w-56 absolute mt-10 shadow-md"
+          id="searchDropdown"
+        >
+          <li><a>New York</a></li>
+          <li><a>New Zealand</a></li>
+        </ul>
+        }
+      </div>
+      <button class="btn btn-sm btn-active btn-primary">Search</button>
     </div>
-    <button class="btn btn-sm btn-active btn-primary">Search</button>
   </div>
 </div>
