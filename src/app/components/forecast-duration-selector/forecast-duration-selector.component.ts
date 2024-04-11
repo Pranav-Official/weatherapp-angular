@@ -14,12 +14,11 @@ export class ForecastDurationSelectorComponent {
 
   setDuration(duration: string) {
     this.selectedDuration = duration;
-    this.durationChange.emit(duration); // Emit event for external consumption
+    this.durationChange.emit(duration);
     console.log(`Fetching weather forecast for ${duration} duration`);
 
-    // Update active tab visually using Angular features:
     const tabs = document.querySelectorAll('.tab');
-    tabs.forEach((tab) => tab.classList.remove('active')); // Remove active class from all
+    tabs.forEach((tab) => tab.classList.remove('active'));
 
     const activeTab = document.querySelector(
       `button[class*='tab'][data-duration='${duration}']`
