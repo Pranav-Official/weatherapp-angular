@@ -1,0 +1,13 @@
+<div class="tablist-container">
+  <div class="tablist">
+    @for( duration of durations;track $index){
+    <button
+      class="tab"
+      [attr.data-duration]="duration"
+      (click)="setDuration(duration)"
+    >
+      {{ duration }}
+    </button>
+    }
+  </div>
+</div>

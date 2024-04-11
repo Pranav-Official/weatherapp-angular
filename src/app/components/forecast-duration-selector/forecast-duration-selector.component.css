@@ -1,0 +1,35 @@
+.tablist-container {
+  background-color: #f7f7f7;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  border-radius: 0.4rem;
+}
+
+.tablist {
+  display: flex;
+  border-color: #000;
+  border-width: 1px;
+  border-radius: 0.4rem;
+  margin-left: 0%;
+  align-items: flex-start;
+  width: fit-content;
+  height: fit-content;
+}
+
+.tab {
+  flex: 1;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: #f7f7f7;
+  color: #000;
+}
+.tab:hover {
+  background-color: rgb(204, 204, 209) y;
+  color: #000;
+}
+
+.tab.active {
+  background-color: #000;
+  color: #fff;
+}
