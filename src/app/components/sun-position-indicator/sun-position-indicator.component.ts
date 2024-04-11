@@ -1,4 +1,33 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+const timeToMinutes = (hours: string) => {
+  return parseInt(hours.split(':')[0]) * 60 + parseInt(hours.split(':')[1]);
+};
+
+const getProgress = (
+  currentTime: string,
+  sunriseTime: string,
+  sunsetTime: string
+) => {
+  const currentMinutes = timeToMinutes(currentTime);
+  const sunriseMinutes = timeToMinutes(sunriseTime);
+  const sunsetMinutes = timeToMinutes(sunsetTime);
+  console.log(currentMinutes, sunriseMinutes, sunsetMinutes);
+  if (currentMinutes < sunriseMinutes) {
+    return 0;
+  } else if (currentMinutes > sunsetMinutes) {
+    return 100;
+  } else {
+    console.log(
+      ((currentMinutes - sunriseMinutes) * 100) /
+        (sunsetMinutes - sunriseMinutes)
+    );
+    return (
+      ((currentMinutes - sunriseMinutes) * 100) /
+      (sunsetMinutes - sunriseMinutes)
+    );
+  }
+};
 
 @Component({
   selector: 'app-sun-position-indicator',
@@ -12,9 +41,11 @@ export class SunPositionIndicatorComponent {
   sunriseTime!: string;
   @Input()
   sunsetTime!: string;
+  @Input() currentTime!: string;
 
   sunriseTimeText!: string;
   sunsetTimeText!: string;
+  sunProgress!: number;
 
   constructor() {}
 
@@ -45,5 +76,8 @@ export class SunPositionIndicatorComponent {
     }
 
     this.sunriseTimeText = this.sunriseTime + ' AM';
+    this.sunProgress = Math.floor(
+      getProgress(this.currentTime, this.sunriseTime, this.sunsetTime)
+    );
   }
 }

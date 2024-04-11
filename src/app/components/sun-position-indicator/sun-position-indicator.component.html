@@ -6,9 +6,19 @@
   <div
     class="sun-position-indicator-container h-1/2 flex flex-row pe-8 items-center"
   >
-    <div class="h-0 w-1/2 border-t-4 border-primary border-solid"></div>
-    <img src="./../assets/icons/Sunny Day.png" class="w-16" alt="" />
-    <div class="h-0 w-1/2 border-t-4 border-primary border-dashed"></div>
+    <div
+      class="sun-progress h-0 border-t-4 border-primary border-solid"
+      [style]="{ flex: sunProgress }"
+    ></div>
+    <img
+      src="./../assets/icons/Sunny Day.png"
+      class="w-16 sunIndicator"
+      alt=""
+    />
+    <div
+      class="sun-remaining h-0 border-t-4 border-primary border-dashed"
+      [style]="{ flex: 100 - sunProgress }"
+    ></div>
   </div>
   <div class="sunrise-time flex w-full flex-row-reverse pe-6">
     <img
