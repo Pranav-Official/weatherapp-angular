@@ -1,7 +1,7 @@
 <div class="md:px-16 px-6">
   <div class="hero-text-container pt-3">
     <p class="hero-label text-xl uppercase font-light">current location</p>
-    <p class="hero-text text-6xl uppercase font-bold">san francisco</p>
+    <p class="hero-text text-5xl uppercase font-bold">san francisco</p>
   </div>
   <div class="weather-widget-container mt-6">
     <div class="weather-widgets wid1 rounded-xl overflow-hidden">
@@ -40,7 +40,15 @@
       ></app-single-info-label>
     </div>
     <div class="weather-widgets wid7 rounded-xl">
-      <app-sun-position-indicator></app-sun-position-indicator>
+      <app-sun-position-indicator
+        sunriseTime="05:00"
+        sunsetTime="18:00"
+        currentTime="10:00"
+      ></app-sun-position-indicator>
     </div>
+  </div>
+  <div class="bg-secondary flex flex-col mt-4 rounded-xl px-3">
+    <div></div>
+    <app-info-carousal></app-info-carousal>
   </div>
 </div>
