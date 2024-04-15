@@ -1,0 +1,14 @@
+<div class="tablist-container">
+  <div class="tablist">
+    @for( selector of selectors;track $index){
+    <button
+      class="tab"
+      [id]="'selector-' + selector"
+      [attr.data-selector]="selector"
+      (click)="setSelector(selector)"
+    >
+      {{ selector }}
+    </button>
+    }
+  </div>
+</div>

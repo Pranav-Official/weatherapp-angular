@@ -1,8 +1,8 @@
 .tablist-container {
   background-color: #f7f7f7;
-  margin-left: 4rem;
-  margin-right: 4rem;
   border-radius: 0.4rem;
+  width: fit-content;
+  height: fit-content;
 }
 
 .tablist {
@@ -10,7 +10,6 @@
   border-color: #000;
   border-width: 1px;
   border-radius: 0.4rem;
-  margin-left: 0%;
   align-items: flex-start;
   width: fit-content;
   height: fit-content;
@@ -23,6 +22,8 @@
   border-radius: 0.4rem;
   background-color: #f7f7f7;
   color: #000;
+  min-width: 100px;
+  padding: 0.25rem;
 }
 .tab:hover {
   background-color: rgb(204, 204, 209) y;
