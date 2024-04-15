@@ -5,6 +5,8 @@ import { SingleInfoComponent } from '../single-info/single-info.component';
 import { SingleInfoLabelComponent } from '../single-info-label/single-info-label.component';
 import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-position-indicator.component';
 import { InfoCarousalComponent } from '../info-carousal/info-carousal.component';
+import { VisualizationDropDownComponent } from '../visualization-drop-down/visualization-drop-down.component';
+import { SelectorComponent } from '../selector/selector.component';
 
 @Component({
   selector: 'app-homepage',
@@ -18,6 +20,11 @@ import { InfoCarousalComponent } from '../info-carousal/info-carousal.component'
     MapWidgetComponent,
     SunPositionIndicatorComponent,
     InfoCarousalComponent,
+    VisualizationDropDownComponent,
+    SelectorComponent,
   ],
 })
-export class HomepageComponent {}
+export class HomepageComponent {
+  hourlySelector = 'HOURLY';
+  temperatureSelector = 'TEMPERATURE';
+}
