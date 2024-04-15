@@ -16,15 +16,15 @@
           class="input input-sm input-bordered border-2 w-24 md:w-auto"
           id="searchInput"
         />
-        @if(showDropdown){
         <ul
+          *ngIf="showDropdown"
           class="menu dropdown-content bg-base-100 rounded-box w-56 absolute mt-10 shadow-md"
           id="searchDropdown"
         >
-          <li><a>New York</a></li>
-          <li><a>New Zealand</a></li>
+          <li *ngFor="let location of searchResults?.results">
+            <a>{{ location.name }}</a>
+          </li>
         </ul>
-        }
       </div>
       <button class="btn btn-sm btn-active btn-primary">Search</button>
     </div>
