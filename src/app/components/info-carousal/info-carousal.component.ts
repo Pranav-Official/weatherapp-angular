@@ -1,3 +1,4 @@
+import { WeatherIconService } from './../../services/weather-icon.service';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, fromEvent } from 'rxjs';
@@ -16,7 +17,7 @@ import {
   selector: 'app-info-carousal',
   standalone: true,
   imports: [CarouselInfoTileComponent, CommonModule, HttpClientModule],
-  providers: [WeatherDataService],
+  providers: [WeatherDataService, WeatherIconService],
   templateUrl: './info-carousal.component.html',
   styleUrl: './info-carousal.component.css',
 })
@@ -33,12 +34,17 @@ export class InfoCarousalComponent {
   temperature: number[] = [];
   humidity: number[] = [];
   uv: number[] = [];
+  weather_code: number[] = [];
+  latitude: number = 52.52;
+  longitude: number = 13.41;
+  forecast_days: number = 1;
 
   constructor(
     private renderer: Renderer2,
     private elementRef: ElementRef,
     private router: Router,
-    private WeatherDataService: WeatherDataService
+    private WeatherDataService: WeatherDataService,
+    private WeatherIconService: WeatherIconService
   ) {
     const emptyHourlyWeather: HourlyWeather = {
       time: [],
@@ -129,6 +135,7 @@ export class InfoCarousalComponent {
       );
     }
   }
+
   goToPreviousPosition(): void {
     if (this.currentPositionIndex > 0) {
       this.currentPositionIndex--;
@@ -150,6 +157,17 @@ export class InfoCarousalComponent {
       }
     }
   }
+
+  getWeatherIconUrl(
+    weather_icon_code: number,
+    timeObject: string
+  ): string | undefined {
+    return this.WeatherIconService.getWeatherIconUrl(
+      weather_icon_code,
+      timeObject
+    );
+  }
+
   getCurrentViewportWidth(): number {
     return this.elementRef.nativeElement.ownerDocument.defaultView.innerWidth;
   }
@@ -166,7 +184,11 @@ export class InfoCarousalComponent {
       this.setPositionNumbers(newViewportWidth);
     });
 
-    this.WeatherDataService.getHourlyWeatherData().subscribe(
+    this.WeatherDataService.getHourlyWeatherData(
+      this.latitude,
+      this.longitude,
+      this.forecast_days
+    ).subscribe(
       (data) => {
         this.weather_data = data;
         this.time_data = this.weather_data.hourly.time;
@@ -177,13 +199,18 @@ export class InfoCarousalComponent {
         this.temperature = this.weather_data.hourly.temperature_2m;
         this.humidity = this.weather_data.hourly.relative_humidity_2m;
         this.wind_speed = this.weather_data.hourly.wind_speed_10m;
+        this.weather_code = this.weather_data.hourly.weather_code;
       },
       (error) => {
         console.log('Error while fetching Hourly Weather Data', error);
       }
     );
 
-    this.WeatherDataService.getHourlyUVData().subscribe(
+    this.WeatherDataService.getHourlyUVData(
+      this.latitude,
+      this.longitude,
+      this.forecast_days
+    ).subscribe(
       (data) => {
         this.weather_data_uv = data;
         this.uv = this.weather_data_uv.hourly.uv_index;

@@ -19,6 +19,7 @@
         [humidity]="humidity[index]"
         [uv]="uv[index]"
         [wind_speed]="wind_speed[index]"
+        [weather_icon_url]="getWeatherIconUrl(weather_code[index], timeObject)"
       ></app-carousel-info-tile>
     </div>
   </div>

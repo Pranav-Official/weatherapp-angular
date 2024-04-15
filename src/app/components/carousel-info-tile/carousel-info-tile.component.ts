@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class CarouselInfoTileComponent {
   @Input() time: string = '0';
-  @Input() weather_iconUrl: string = '../../../assets/icons/Sunny Day.png';
+  @Input() weather_icon_url: string | undefined = '';
   @Input() temperature: number = 0;
   @Input() wind_speed: number = 0;
   @Input() humidity: number = 0;
