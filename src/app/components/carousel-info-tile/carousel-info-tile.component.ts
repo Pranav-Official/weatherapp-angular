@@ -8,10 +8,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './carousel-info-tile.component.css',
 })
 export class CarouselInfoTileComponent {
-  time: string = '09:00AM';
-  weather_iconUrl: string = '../../../assets/icons/Sunny Day.png';
-  temperature: number = 20;
-  wind_speed: number = 5;
-  rain_percentage: number = 56;
-  uv: number = 12;
+  @Input() time: string = '0';
+  @Input() weather_icon_url: string | undefined = '';
+  @Input() temperature: number = 0;
+  @Input() wind_speed: number = 0;
+  @Input() humidity: number = 0;
+  @Input() uv: number = 0;
 }
