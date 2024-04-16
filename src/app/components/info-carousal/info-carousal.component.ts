@@ -172,7 +172,7 @@ export class InfoCarousalComponent {
     return this.elementRef.nativeElement.ownerDocument.defaultView.innerWidth;
   }
   ngOnInit(): void {
-    // Initial viewport width
+    // Initial viewport widt
     const viewportWidth = this.getCurrentViewportWidth();
     console.log('Viewport width:', viewportWidth);
     this.setPositionNumbers(viewportWidth);
