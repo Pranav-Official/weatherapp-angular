@@ -1,12 +1,17 @@
 <div class="md:px-16 px-6">
   <div class="hero-text-container pt-3">
     <p class="hero-label text-xl uppercase font-light">current location</p>
-    <p class="hero-text text-5xl uppercase font-bold">san francisco</p>
+    <p class="hero-text text-5xl uppercase font-bold">
+      {{ selectedLocation.name
+      }}<span class="text-2xl ps-3 font-light">{{
+        selectedLocation.country
+      }}</span>
+    </p>
   </div>
   <app-weather-widgets
-    latitude="9.9312"
-    longitude="76.2673"
-    timezone="Asia/Kolkata"
+    latitude="{{ selectedLocation.latitude }}"
+    longitude="{{ selectedLocation.longitude }}"
+    timezone="{{ selectedLocation.timezone }}"
   ></app-weather-widgets>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="mt-3">
@@ -18,9 +23,9 @@
     </div>
 
     <app-info-carousal
-      latitude="9.9312"
-      longitude="76.2673"
-      timezone="Asia/Kolkata"
+      latitude="{{ selectedLocation.latitude }}"
+      longitude="{{ selectedLocation.longitude }}"
+      timezone="{{ selectedLocation.timezone }}"
     ></app-info-carousal>
   </div>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
@@ -40,5 +45,6 @@
         ></app-selector>
       </div>
     </div>
+    <app-visualization-cart></app-visualization-cart>
   </div>
 </div>

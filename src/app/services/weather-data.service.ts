@@ -17,7 +17,7 @@ export class WeatherDataService {
     daily: 'temperature_2m_max,temperature_2m_min,sunrise,sunset',
     forecast_days: 1,
   };
-  private cuurentParamsAir = 'pm10,pm2_5';
+  private cuurentParamsAir = 'european_aqi,uv_index';
   constructor(private http: HttpClient) {}
   getHourlyWeatherData(
     latitude: number,
@@ -63,7 +63,11 @@ export class WeatherDataService {
       params: params,
     });
   }
-  getCurrentWeatherData(latitude: number, longitude: number): Observable<any> {
+  getCurrentWeatherData(
+    latitude: number,
+    longitude: number,
+    timezone: string
+  ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -73,13 +77,18 @@ export class WeatherDataService {
       current: this.currentParams.current,
       daily: this.currentParams.daily,
       forecast_days: this.currentParams.forecast_days.toString(),
+      timezone: timezone,
     };
     return this.http.get<any>(this.weatherDataBaseUrl + 'forecast', {
       headers: headers,
       params: params,
     });
   }
-  getCurrentAirData(latitude: number, longitude: number): Observable<any> {
+  getCurrentAirData(
+    latitude: number,
+    longitude: number,
+    timezone: string
+  ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -87,6 +96,7 @@ export class WeatherDataService {
       latitude: latitude.toString(),
       longitude: longitude.toString(),
       current: this.cuurentParamsAir,
+      timezone: timezone,
     };
     return this.http.get<any>(this.UVDataBaseUrl + 'air-quality', {
       headers: headers,
