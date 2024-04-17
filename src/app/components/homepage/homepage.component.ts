@@ -7,6 +7,7 @@ import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-pos
 import { InfoCarousalComponent } from '../info-carousal/info-carousal.component';
 import { VisualizationDropDownComponent } from '../visualization-drop-down/visualization-drop-down.component';
 import { SelectorComponent } from '../selector/selector.component';
+import { WeatherWidgetsComponent } from '../weather-widgets/weather-widgets.component';
 
 @Component({
   selector: 'app-homepage',
@@ -22,6 +23,7 @@ import { SelectorComponent } from '../selector/selector.component';
     InfoCarousalComponent,
     VisualizationDropDownComponent,
     SelectorComponent,
+    WeatherWidgetsComponent,
   ],
 })
 export class HomepageComponent {

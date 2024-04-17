@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 const timeToMinutes = (hours: string) => {
   return parseInt(hours.split(':')[0]) * 60 + parseInt(hours.split(':')[1]);
@@ -12,16 +12,11 @@ const getProgress = (
   const currentMinutes = timeToMinutes(currentTime);
   const sunriseMinutes = timeToMinutes(sunriseTime);
   const sunsetMinutes = timeToMinutes(sunsetTime);
-  console.log(currentMinutes, sunriseMinutes, sunsetMinutes);
   if (currentMinutes < sunriseMinutes) {
     return 0;
   } else if (currentMinutes > sunsetMinutes) {
     return 100;
   } else {
-    console.log(
-      ((currentMinutes - sunriseMinutes) * 100) /
-        (sunsetMinutes - sunriseMinutes)
-    );
     return (
       ((currentMinutes - sunriseMinutes) * 100) /
       (sunsetMinutes - sunriseMinutes)
@@ -36,7 +31,7 @@ const getProgress = (
   templateUrl: './sun-position-indicator.component.html',
   styleUrl: './sun-position-indicator.component.css',
 })
-export class SunPositionIndicatorComponent {
+export class SunPositionIndicatorComponent implements OnChanges {
   @Input()
   sunriseTime!: string;
   @Input()
@@ -49,7 +44,7 @@ export class SunPositionIndicatorComponent {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnChanges() {
     if (parseInt(this.sunsetTime?.split(':')[0]) > 12) {
       this.sunsetTimeText =
         (parseInt(this.sunsetTime?.split(':')[0]) - 12).toString() +

@@ -1,5 +1,5 @@
 import { WeatherIconService } from './../../services/weather-icon.service';
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CarouselInfoTileComponent } from '../carousel-info-tile/carousel-info-tile.component';
@@ -22,6 +22,9 @@ import {
   styleUrl: './info-carousal.component.css',
 })
 export class InfoCarousalComponent {
+  @Input() latitude: any = 52.52;
+  @Input() longitude: any = 13.41;
+  @Input() timezone: any = 'GMT';
   availablePositions: [number, number][] = [];
   currentPositionIndex: number = 0;
   resizeObservable$!: Observable<Event>;
@@ -35,8 +38,6 @@ export class InfoCarousalComponent {
   humidity: number[] = [];
   uv: number[] = [];
   weather_code: number[] = [];
-  latitude: number = 52.52;
-  longitude: number = 13.41;
   forecast_days: number = 1;
 
   constructor(
@@ -172,7 +173,7 @@ export class InfoCarousalComponent {
     return this.elementRef.nativeElement.ownerDocument.defaultView.innerWidth;
   }
   ngOnInit(): void {
-    // Initial viewport width
+    // Initial viewport widt
     const viewportWidth = this.getCurrentViewportWidth();
     console.log('Viewport width:', viewportWidth);
     this.setPositionNumbers(viewportWidth);
@@ -187,9 +188,11 @@ export class InfoCarousalComponent {
     this.WeatherDataService.getHourlyWeatherData(
       this.latitude,
       this.longitude,
-      this.forecast_days
+      this.forecast_days,
+      this.timezone
     ).subscribe(
       (data) => {
+        console.log(data);
         this.weather_data = data;
         this.time_data = this.weather_data.hourly.time;
         for (const dateTimeString of this.weather_data.hourly.time) {
@@ -209,7 +212,8 @@ export class InfoCarousalComponent {
     this.WeatherDataService.getHourlyUVData(
       this.latitude,
       this.longitude,
-      this.forecast_days
+      this.forecast_days,
+      this.timezone
     ).subscribe(
       (data) => {
         this.weather_data_uv = data;
