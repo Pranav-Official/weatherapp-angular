@@ -45,6 +45,14 @@ export class SunPositionIndicatorComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges() {
+    console.log(
+      'sunriseTime: ' +
+        this.sunriseTime +
+        ' sunsetTime: ' +
+        this.sunsetTime +
+        ' currentTime: ' +
+        this.currentTime
+    );
     if (parseInt(this.sunsetTime?.split(':')[0]) > 12) {
       this.sunsetTimeText =
         (parseInt(this.sunsetTime?.split(':')[0]) - 12).toString() +

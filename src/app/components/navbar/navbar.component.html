@@ -12,7 +12,6 @@
           type="text"
           placeholder="Search"
           (keyup)="onSearchKeyUp($event)"
-          (blur)="onSearchBlur()"
           class="input input-sm input-bordered border-2 w-24 md:w-auto"
           id="searchInput"
         />
@@ -21,9 +20,23 @@
           class="menu dropdown-content bg-base-100 rounded-box w-56 absolute mt-10 shadow-md"
           id="searchDropdown"
         >
+          @if (!searchResults?.results) {
+          <li>
+            <button class="text-center text-mg text-primary">No results</button>
+          </li>
+          }
+
           <li
             *ngFor="let location of searchResults?.results; let i = index"
-            (click)="onLocationClick()"
+            (click)="
+              onLocationClick(
+                location.latitude,
+                location.longitude,
+                location.name,
+                location.country,
+                location.timezone
+              )
+            "
           >
             <button id="location{{ i }}">
               <span>{{ location.name }},</span>[{{ location.country_code }}]-{{

@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchLocationService } from '../../services/search-location.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { query } from '@angular/animations';
 
 interface LocationDetails {
   results: {
@@ -15,6 +17,14 @@ interface LocationDetails {
     country: string;
   }[];
 }
+
+type selectedLocation = {
+  latitude: string;
+  longitude: string;
+  name: string;
+  country: string;
+  timezone: string;
+};
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -30,7 +40,10 @@ export class NavbarComponent {
   @Input() longitude: string | undefined;
   searchResults: LocationDetails | null = null;
 
-  constructor(private searchLocationService: SearchLocationService) {}
+  constructor(
+    private searchLocationService: SearchLocationService,
+    private router: Router
+  ) {}
 
   onSearchKeyUp(event: KeyboardEvent) {
     const inputElement = event.target as HTMLInputElement;
@@ -51,7 +64,22 @@ export class NavbarComponent {
     this.showDropdown = false;
   }
 
-  onLocationClick() {
-    console.log('search click');
+  onLocationClick(
+    latitude: string,
+    longitude: string,
+    name: string,
+    country: string,
+    timezone: string
+  ) {
+    this.router.navigate(['/'], {
+      queryParams: { latitude, longitude, name, country, timezone },
+    });
+    this.showDropdown = false;
+    const inputElement = document.getElementById(
+      'searchInput'
+    ) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.value = '';
+    }
   }
 }

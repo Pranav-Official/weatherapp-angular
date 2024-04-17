@@ -1,4 +1,4 @@
-import { Component, Input, Type } from '@angular/core';
+import { Component, Input, OnChanges, Type } from '@angular/core';
 import { SingleInfoLabelComponent } from '../single-info-label/single-info-label.component';
 import { SunPositionIndicatorComponent } from '../sun-position-indicator/sun-position-indicator.component';
 import { SingleInfoComponent } from '../single-info/single-info.component';
@@ -27,7 +27,6 @@ type CurrentWeatherData = {
     | 'excellent'
     | 'fair'
     | 'good'
-    | 'moderate'
     | 'poor'
     | 'very poor'
     | 'severe';
@@ -83,7 +82,7 @@ function adjustTime(time: string, utcOffset: string): string {
   ],
   providers: [WeatherDataService, WeatherIconService, TimeDataService],
 })
-export class WeatherWidgetsComponent {
+export class WeatherWidgetsComponent implements OnChanges {
   @Input() latitude: any;
   @Input() longitude: any;
   @Input() timezone: string = '';
@@ -111,9 +110,9 @@ export class WeatherWidgetsComponent {
     private weatherIconService: WeatherIconService,
     private timeDataService: TimeDataService
   ) {}
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.weatherDataService
-      .getCurrentWeatherData(this.latitude, this.longitude)
+      .getCurrentWeatherData(this.latitude, this.longitude, this.timezone)
       .subscribe((data) => {
         this.curentData.weather_icon_url =
           this.weatherIconService.getWeatherIconUrl(
@@ -127,22 +126,40 @@ export class WeatherWidgetsComponent {
         this.curentData.wind_speed = data.current.wind_speed_10m;
         this.sunriseTimeStamp = data.daily.sunrise[0];
         this.sunsetTimeStamp = data.daily.sunset[0];
+        console.log(
+          ' sunrise and sunset',
+          this.sunriseTimeStamp,
+          this.sunsetTimeStamp
+        );
         this.timeDataService.getTimeData(this.timezone).subscribe((data) => {
           const currentTimestamp = data.datetime;
           const utsOffset = data.utc_offset;
-          this.curentData.sunrise = adjustTime(
-            this.sunriseTimeStamp.split('T')[1],
-            utsOffset
-          );
-          this.curentData.sunset = adjustTime(
-            this.sunsetTimeStamp.split('T')[1],
-            utsOffset
-          );
+          this.curentData.sunrise = this.sunriseTimeStamp.split('T')[1];
+          this.curentData.sunset = this.sunsetTimeStamp.split('T')[1];
           this.curentData.current_time =
             currentTimestamp.split('+')[0].split('T')[1].split(':')[0] +
             ':' +
             currentTimestamp.split('+')[0].split('T')[1].split(':')[1];
         });
+      });
+    this.weatherDataService
+      .getCurrentAirData(this.latitude, this.longitude, this.timezone)
+      .subscribe((data) => {
+        console.log(data);
+        if (parseInt(data.current.european_aqi) > 100) {
+          this.curentData.air_quality = 'severe';
+        } else if (parseInt(data.current.european_aqi) > 80) {
+          this.curentData.air_quality = 'very poor';
+        } else if (parseInt(data.current.european_aqi) > 60) {
+          this.curentData.air_quality = 'poor';
+        } else if (parseInt(data.current.european_aqi) > 40) {
+          this.curentData.air_quality = 'fair';
+        } else if (parseInt(data.current.european_aqi) > 20) {
+          this.curentData.air_quality = 'good';
+        } else {
+          this.curentData.air_quality = 'excellent';
+        }
+        this.curentData.uv_index = data.current.uv_index;
       });
   }
 }

@@ -1,5 +1,11 @@
 import { WeatherIconService } from './../../services/weather-icon.service';
-import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  Renderer2,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CarouselInfoTileComponent } from '../carousel-info-tile/carousel-info-tile.component';
@@ -21,7 +27,7 @@ import {
   templateUrl: './info-carousal.component.html',
   styleUrl: './info-carousal.component.css',
 })
-export class InfoCarousalComponent {
+export class InfoCarousalComponent implements OnChanges {
   @Input() latitude: any = 52.52;
   @Input() longitude: any = 13.41;
   @Input() timezone: any = 'GMT';
@@ -172,16 +178,14 @@ export class InfoCarousalComponent {
   getCurrentViewportWidth(): number {
     return this.elementRef.nativeElement.ownerDocument.defaultView.innerWidth;
   }
-  ngOnInit(): void {
+  ngOnChanges(): void {
     // Initial viewport widt
     const viewportWidth = this.getCurrentViewportWidth();
-    console.log('Viewport width:', viewportWidth);
     this.setPositionNumbers(viewportWidth);
 
     // Subscribe to window resize event
     this.renderer.listen('window', 'resize', () => {
       const newViewportWidth = this.getCurrentViewportWidth();
-      console.log('New viewport width:', newViewportWidth);
       this.setPositionNumbers(newViewportWidth);
     });
 
@@ -192,7 +196,6 @@ export class InfoCarousalComponent {
       this.timezone
     ).subscribe(
       (data) => {
-        console.log(data);
         this.weather_data = data;
         this.time_data = this.weather_data.hourly.time;
         for (const dateTimeString of this.weather_data.hourly.time) {
