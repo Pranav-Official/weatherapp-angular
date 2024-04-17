@@ -3,47 +3,11 @@
     <p class="hero-label text-xl uppercase font-light">current location</p>
     <p class="hero-text text-5xl uppercase font-bold">san francisco</p>
   </div>
-  <div class="weather-widget-container mt-6">
-    <div class="weather-widgets wid1 rounded-xl overflow-hidden">
-      <app-map-widget latitude="10.0101" longitude="76.2038"></app-map-widget>
-    </div>
-    <div class="weather-widgets wid2 rounded-xl">
-      <app-temperature-widget></app-temperature-widget>
-    </div>
-    <div class="weather-widgets wid3 rounded-xl">
-      <app-single-info
-        imageUrl="../../../assets/icons/wind-speed.png"
-        text="5 km/h"
-      ></app-single-info>
-    </div>
-    <div class="weather-widgets wid4 rounded-xl">
-      <app-single-info
-        imageUrl="../../../assets/icons/humidity.png"
-        text="36%"
-      ></app-single-info>
-    </div>
-    <div class="weather-widgets wid5 rounded-xl">
-      <app-single-info-label
-        iconUrl="../../../assets/icons/uv.png"
-        label="UV Index "
-        result="12"
-      ></app-single-info-label>
-    </div>
-    <div class="weather-widgets wid6 rounded-xl">
-      <app-single-info-label
-        iconUrl="../../../assets/icons/air-quality.png"
-        label="Air Quality"
-        result="Poor"
-      ></app-single-info-label>
-    </div>
-    <div class="weather-widgets wid7 rounded-xl">
-      <app-sun-position-indicator
-        sunriseTime="05:00"
-        sunsetTime="18:00"
-        currentTime="10:00"
-      ></app-sun-position-indicator>
-    </div>
-  </div>
+  <app-weather-widgets
+    latitude="9.9312"
+    longitude="76.2673"
+    timezone="Asia/Kolkata"
+  ></app-weather-widgets>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="mt-3">
       <app-selector
@@ -53,7 +17,11 @@
       ></app-selector>
     </div>
 
-    <app-info-carousal></app-info-carousal>
+    <app-info-carousal
+      latitude="9.9312"
+      longitude="76.2673"
+      timezone="Asia/Kolkata"
+    ></app-info-carousal>
   </div>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="flex flex-row justify-between">

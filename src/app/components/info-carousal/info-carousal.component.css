@@ -1,6 +1,11 @@
+.carousal-container {
+  margin-top: 1rem;
+}
+
 .carousel {
   gap: 1%;
-  height: 40vh;
+  height: 45vh;
+  margin-top: -2.2vh;
 }
 
 .carousel-item {
@@ -8,7 +13,7 @@
 }
 
 .carousel-button {
-  height: 34vh;
+  height: 37vh;
   width: 4%;
 }
 

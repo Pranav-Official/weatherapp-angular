@@ -1,4 +1,4 @@
-<div class="flex flex-row items-center">
+<div class="carousal-container flex flex-row items-center">
   <a
     class="carousel-button bg-accent rounded-lg me-2 flex items-center align-middle mb-4"
     (click)="goToPreviousPosition()"
@@ -7,31 +7,21 @@
       class="w-12 h-12 rotate-180"
       alt=""
   /></a>
-  <div id="info-carousal" class="carousel w-full bg-secondary p-6 pt-3">
-    <div id="item1" class="carousel-item bg-accent rounded-lg">1</div>
-    <div id="item2" class="carousel-item bg-accent rounded-lg">2</div>
-    <div id="item3" class="carousel-item bg-accent rounded-lg">3</div>
-    <div id="item4" class="carousel-item bg-accent rounded-lg">4</div>
-    <div id="item5" class="carousel-item bg-accent rounded-lg">5</div>
-    <div id="item6" class="carousel-item bg-accent rounded-lg">6</div>
-    <div id="item7" class="carousel-item bg-accent rounded-lg">7</div>
-    <div id="item8" class="carousel-item bg-accent rounded-lg">8</div>
-    <div id="item9" class="carousel-item bg-accent rounded-lg">9</div>
-    <div id="item10" class="carousel-item bg-accent rounded-lg">10</div>
-    <div id="item11" class="carousel-item bg-accent rounded-lg">11</div>
-    <div id="item12" class="carousel-item bg-accent rounded-lg">12</div>
-    <div id="item13" class="carousel-item bg-accent rounded-lg">13</div>
-    <div id="item14" class="carousel-item bg-accent rounded-lg">14</div>
-    <div id="item15" class="carousel-item bg-accent rounded-lg">15</div>
-    <div id="item16" class="carousel-item bg-accent rounded-lg">16</div>
-    <div id="item17" class="carousel-item bg-accent rounded-lg">17</div>
-    <div id="item18" class="carousel-item bg-accent rounded-lg">18</div>
-    <div id="item19" class="carousel-item bg-accent rounded-lg">19</div>
-    <div id="item20" class="carousel-item bg-accent rounded-lg">20</div>
-    <div id="item21" class="carousel-item bg-accent rounded-lg">21</div>
-    <div id="item22" class="carousel-item bg-accent rounded-lg">22</div>
-    <div id="item23" class="carousel-item bg-accent rounded-lg">23</div>
-    <div id="item24" class="carousel-item bg-accent rounded-lg">24</div>
+  <div id="info-carousal" class="carousel w-full bg-secondary p-6">
+    <div
+      *ngFor="let timeObject of time; let index = index"
+      id="item{{ index + 1 }}"
+      class="carousel-item bg-accent rounded-lg p-0 block"
+    >
+      <app-carousel-info-tile
+        [time]="timeObject"
+        [temperature]="temperature[index]"
+        [humidity]="humidity[index]"
+        [uv]="uv[index]"
+        [wind_speed]="wind_speed[index]"
+        [weather_icon_url]="getWeatherIconUrl(weather_code[index], timeObject)"
+      ></app-carousel-info-tile>
+    </div>
   </div>
   <a
     (click)="goToNextPosition()"

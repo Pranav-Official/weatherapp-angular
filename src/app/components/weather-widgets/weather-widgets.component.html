@@ -1,0 +1,49 @@
+<div class="weather-widget-container mt-6">
+  <div class="weather-widgets wid1 rounded-xl overflow-hidden">
+    <app-map-widget
+      latitude="{{ latitude }}"
+      longitude="{{ longitude }}"
+    ></app-map-widget>
+  </div>
+  <div class="weather-widgets wid2 rounded-xl">
+    <app-temperature-widget
+      temperature="{{ curentData.temperature }}"
+      temperature_max="{{ curentData.temperature_max }}"
+      temperature_min="{{ curentData.temperature_min }}"
+      weather_icon_url="{{ curentData.weather_icon_url }}"
+    ></app-temperature-widget>
+  </div>
+  <div class="weather-widgets wid3 rounded-xl">
+    <app-single-info
+      imageUrl="../../../assets/icons/wind-speed.png"
+      text="{{ curentData.wind_speed }} km/h"
+    ></app-single-info>
+  </div>
+  <div class="weather-widgets wid4 rounded-xl">
+    <app-single-info
+      imageUrl="../../../assets/icons/humidity.png"
+      text="{{ curentData.humidity }}%"
+    ></app-single-info>
+  </div>
+  <div class="weather-widgets wid5 rounded-xl">
+    <app-single-info-label
+      iconUrl="../../../assets/icons/uv.png"
+      label="UV Index "
+      result="{{ curentData.uv_index }}"
+    ></app-single-info-label>
+  </div>
+  <div class="weather-widgets wid6 rounded-xl">
+    <app-single-info-label
+      iconUrl="../../../assets/icons/air-quality.png"
+      label="Air Quality"
+      result="{{ curentData.air_quality }}"
+    ></app-single-info-label>
+  </div>
+  <div class="weather-widgets wid7 rounded-xl">
+    <app-sun-position-indicator
+      sunriseTime="{{ curentData.sunrise }}"
+      sunsetTime="{{ curentData.sunset }}"
+      currentTime="{{ curentData.current_time }}"
+    ></app-sun-position-indicator>
+  </div>
+</div>
