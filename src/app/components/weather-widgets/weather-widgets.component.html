@@ -41,9 +41,9 @@
   </div>
   <div class="weather-widgets wid7 rounded-xl">
     <app-sun-position-indicator
-      [sunriseTime]="curentData.sunrise"
-      [sunsetTime]="curentData.sunset"
-      currentTime="13:00"
+      sunriseTime="{{ curentData.sunrise }}"
+      sunsetTime="{{ curentData.sunset }}"
+      currentTime="{{ curentData.current_time }}"
     ></app-sun-position-indicator>
   </div>
 </div>

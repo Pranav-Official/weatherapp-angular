@@ -22,7 +22,8 @@ export class WeatherDataService {
   getHourlyWeatherData(
     latitude: number,
     longitude: number,
-    forecastDays: number
+    forecastDays: number,
+    timezone: string
   ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -33,6 +34,7 @@ export class WeatherDataService {
       longitude: longitude.toString(),
       hourly: this.hourlyParams,
       forecast_days: forecastDays.toString(),
+      timezone: timezone,
     };
     return this.http.get<any>(this.weatherDataBaseUrl + 'forecast', {
       headers: headers,
@@ -43,7 +45,8 @@ export class WeatherDataService {
   getHourlyUVData(
     latitude: number,
     longitude: number,
-    forecastDays: number
+    forecastDays: number,
+    timezone: string
   ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -53,6 +56,7 @@ export class WeatherDataService {
       longitude: longitude.toString(),
       hourly: this.hourlyParamsUV,
       forecast_days: forecastDays.toString(),
+      timezone: timezone,
     };
     return this.http.get<any>(this.UVDataBaseUrl + 'air-quality', {
       headers: headers,

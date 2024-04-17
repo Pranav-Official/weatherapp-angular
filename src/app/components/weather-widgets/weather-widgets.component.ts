@@ -8,6 +8,7 @@ import { WeatherDataService } from '../../services/weather-data.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { WeatherIconService } from '../../services/weather-icon.service';
+import { TimeDataService } from '../../services/time-data.service';
 
 type CurrentWeatherData = {
   current_time: string;
@@ -33,6 +34,39 @@ type CurrentWeatherData = {
   weather_icon_url: string | undefined;
 };
 
+function adjustTime(time: string, utcOffset: string): string {
+  // Split the time and offset into hours and minutes
+  const [timeHours, timeMinutes] = time.split(':').map(Number);
+  const offsetSign = utcOffset[0];
+  const [offsetHours, offsetMinutes] = utcOffset
+    .slice(1)
+    .split(':')
+    .map(Number);
+  // Convert time to minutes
+  let totalMinutes = timeHours * 60 + timeMinutes;
+
+  // Adjust time based on offset
+  if (offsetSign === '-') {
+    totalMinutes -= offsetHours * 60 + offsetMinutes;
+  } else {
+    totalMinutes += offsetHours * 60 + offsetMinutes;
+  }
+
+  // Ensure time is within 24 hours
+  totalMinutes = (totalMinutes + 1440) % 1440;
+
+  // Convert back to hours and minutes
+  const adjustedHours = Math.floor(totalMinutes / 60);
+  const adjustedMinutes = totalMinutes % 60;
+
+  // Format adjusted time
+  const adjustedTime = `${adjustedHours
+    .toString()
+    .padStart(2, '0')}:${adjustedMinutes.toString().padStart(2, '0')}`;
+
+  return adjustedTime;
+}
+
 @Component({
   selector: 'app-weather-widgets',
   standalone: true,
@@ -47,11 +81,14 @@ type CurrentWeatherData = {
     CommonModule,
     HttpClientModule,
   ],
-  providers: [WeatherDataService, WeatherIconService],
+  providers: [WeatherDataService, WeatherIconService, TimeDataService],
 })
 export class WeatherWidgetsComponent {
   @Input() latitude: any;
   @Input() longitude: any;
+  @Input() timezone: string = '';
+  sunriseTimeStamp: string = '';
+  sunsetTimeStamp: string = '';
 
   curentData: CurrentWeatherData = {
     temperature: 0,
@@ -71,13 +108,13 @@ export class WeatherWidgetsComponent {
 
   constructor(
     private weatherDataService: WeatherDataService,
-    private weatherIconService: WeatherIconService
+    private weatherIconService: WeatherIconService,
+    private timeDataService: TimeDataService
   ) {}
   ngOnInit(): void {
     this.weatherDataService
       .getCurrentWeatherData(this.latitude, this.longitude)
       .subscribe((data) => {
-        console.log(' current weather data', data);
         this.curentData.weather_icon_url =
           this.weatherIconService.getWeatherIconUrl(
             parseInt(data.current.weather_code),
@@ -88,13 +125,24 @@ export class WeatherWidgetsComponent {
         this.curentData.temperature_min = data.daily.temperature_2m_min[0];
         this.curentData.humidity = data.current.relative_humidity_2m;
         this.curentData.wind_speed = data.current.wind_speed_10m;
-        this.curentData.sunrise = data.daily.sunrise[0].split('T')[1];
-        this.curentData.sunset = data.daily.sunset[0].split('T')[1];
-        console.log(
-          'sunset and sunrise',
-          this.curentData.sunset,
-          this.curentData.sunrise
-        );
+        this.sunriseTimeStamp = data.daily.sunrise[0];
+        this.sunsetTimeStamp = data.daily.sunset[0];
+        this.timeDataService.getTimeData(this.timezone).subscribe((data) => {
+          const currentTimestamp = data.datetime;
+          const utsOffset = data.utc_offset;
+          this.curentData.sunrise = adjustTime(
+            this.sunriseTimeStamp.split('T')[1],
+            utsOffset
+          );
+          this.curentData.sunset = adjustTime(
+            this.sunsetTimeStamp.split('T')[1],
+            utsOffset
+          );
+          this.curentData.current_time =
+            currentTimestamp.split('+')[0].split('T')[1].split(':')[0] +
+            ':' +
+            currentTimestamp.split('+')[0].split('T')[1].split(':')[1];
+        });
       });
   }
 }
