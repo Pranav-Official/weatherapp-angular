@@ -9,16 +9,10 @@ interface LocationDetails {
     name: string;
     latitude: string;
     longitude: string;
-    elevation: string;
-    feature_code: string;
     country_code: string;
-    admin1_id: number;
-    admin2_id: number;
-    admin3_id: number;
-    admin4_id: number;
     timezone: string;
-    population: number;
-    postcodes: number[];
+    country_id: number;
+    country: string;
   }[];
 }
 @Component({
@@ -31,6 +25,9 @@ interface LocationDetails {
 })
 export class NavbarComponent {
   @Input() showDropdown = false;
+  @Input() selectedLocation: string | undefined;
+  @Input() latitude: string | undefined;
+  @Input() longitude: string | undefined;
   searchResults: LocationDetails | null = null;
 
   constructor(private searchLocationService: SearchLocationService) {}
@@ -52,5 +49,9 @@ export class NavbarComponent {
 
   onSearchBlur() {
     this.showDropdown = false;
+  }
+
+  onLocationClick() {
+    console.log('search click');
   }
 }

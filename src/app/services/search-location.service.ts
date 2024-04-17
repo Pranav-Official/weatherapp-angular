@@ -8,16 +8,10 @@ interface LocationDetails {
     name: string;
     latitude: string;
     longitude: string;
-    elevation: string;
-    feature_code: string;
     country_code: string;
-    admin1_id: number;
-    admin2_id: number;
-    admin3_id: number;
-    admin4_id: number;
     timezone: string;
-    population: number;
-    postcodes: number[];
+    country_id: number;
+    country: string;
   }[];
 }
 
@@ -26,6 +20,8 @@ interface LocationDetails {
 })
 export class SearchLocationService {
   constructor(private http: HttpClient) {}
+  latitude: string | undefined;
+  longitude: string | undefined;
 
   private baseUrl = 'https://geocoding-api.open-meteo.com/v1/';
 
@@ -35,5 +31,9 @@ export class SearchLocationService {
         `${this.baseUrl}search?name=${partialName}&count=5&limit=10&language=en&format=json`
       )
       .pipe(debounceTime(300));
+  }
+  setLocation(latitude?: string, longitude?: string) {
+    latitude = this.latitude;
+    longitude = this.longitude;
   }
 }

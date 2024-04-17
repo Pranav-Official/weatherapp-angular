@@ -21,8 +21,15 @@
           class="menu dropdown-content bg-base-100 rounded-box w-56 absolute mt-10 shadow-md"
           id="searchDropdown"
         >
-          <li *ngFor="let location of searchResults?.results">
-            <a>{{ location.name }}</a>
+          <li
+            *ngFor="let location of searchResults?.results; let i = index"
+            (click)="onLocationClick()"
+          >
+            <button id="location{{ i }}">
+              <span>{{ location.name }},</span>[{{ location.country_code }}]-{{
+                location.country
+              }}
+            </button>
           </li>
         </ul>
       </div>
@@ -30,3 +37,36 @@
     </div>
   </div>
 </div>
+<!-- <div class="flex navbar bg-neutral">
+  <div class="flex-1">
+    <a class="btn btn-ghost text-2xl uppercase">
+      <img src="./../assets/icons/Sunny Day.png" class="w-10" alt="" />
+      Weather Now
+    </a>
+  </div>
+  <div class="form-control">
+    <div class="flex flex-row gap-2">
+      <div class="flex flex-col">
+        <input
+          type="text"
+          placeholder="Search"
+          [(ngModel)]="selectedLocation?.name"
+          (keyup)="onSearchKeyUp($event)"
+          (blur)="onSearchBlur()"
+          class="input input-sm input-bordered border-2 w-24 md:w-auto"
+          id="searchInput"
+        />
+        <ul
+          *ngIf="showDropdown"
+          class="menu dropdown-content bg-base-100 rounded-box w-56 absolute mt-10 shadow-md"
+          id="searchDropdown"
+        >
+          <li *ngFor="let location of searchResults?.results">
+            <a (click)="onLocationClick(location)">{{ location.name }}</a>
+          </li>
+        </ul>
+      </div>
+      <button class="btn btn-sm btn-active btn-primary">Search</button>
+    </div>
+  </div>
+</div> -->
