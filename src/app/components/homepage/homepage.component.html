@@ -1,6 +1,11 @@
 <div class="md:px-16 px-6">
   <div class="hero-text-container pt-3">
+    @if (baseLocationName == selectedLocation.name) {
     <p class="hero-label text-xl uppercase font-light">current location</p>
+    } @else {
+    <p class="hero-label text-xl uppercase font-light">Now viewing</p>
+    }
+
     <p class="hero-text text-5xl uppercase font-bold">
       {{ selectedLocation.name
       }}<span class="text-2xl ps-3 font-light">{{
