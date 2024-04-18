@@ -18,6 +18,7 @@
       <app-selector
         currentSelector="{{ forecastSeletor }}"
         [selectors]="['HOURLY', 'DAILY']"
+        (selectorChange)="selectorChange($event)"
       ></app-selector>
     </div>
 
@@ -25,6 +26,7 @@
       latitude="{{ selectedLocation.latitude }}"
       longitude="{{ selectedLocation.longitude }}"
       timezone="{{ selectedLocation.timezone }}"
+      currentSelector="{{ forecastSeletor }}"
     ></app-info-carousal>
   </div>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">

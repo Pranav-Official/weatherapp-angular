@@ -79,4 +79,8 @@ export class HomepageComponent {
       this.selectedLocation.timezone = params['timezone'];
     });
   }
+
+  selectorChange(forecastSelectorValue: string) {
+    this.forecastSeletor = forecastSelectorValue;
+  }
 }
