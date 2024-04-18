@@ -44,13 +44,34 @@ export class HomepageComponent {
     longitude: '76.2673',
     timezone: 'Asia/Kolkata',
   };
-  hourlySelector = 'HOURLY';
-  temperatureSelector = 'TEMPERATURE';
+  forecastSeletor = 'HOURLY';
+  visualizationSelector = 'TEMPERATURE';
   queryParams: any;
   constructor(private route: ActivatedRoute) {}
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
+      if (!params['latitude']) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            console.log(
+              'Latitude: ' +
+                position.coords.latitude +
+                ', Longitude: ' +
+                position.coords.longitude
+            );
+            this.selectedLocation = {
+              name: 'Kochi',
+              country: 'India',
+              latitude: position.coords.latitude.toString(),
+              longitude: position.coords.longitude.toString(),
+              timezone: 'Asia/Kolkata',
+            };
+          });
+        } else {
+          console.log('Geolocation is not supported by this browser.');
+        }
+      }
       this.selectedLocation.country = params['country'];
       this.selectedLocation.name = params['name'];
       this.selectedLocation.latitude = params['latitude'];
