@@ -82,13 +82,15 @@ export class HomepageComponent {
       this.getLocationFromIpService.getLocation().subscribe((data) => {
         console.log('location from ip', data);
         this.selectedLocation = {
-          name: data.city,
-          country: data.country_name,
+          name: this.selectedLocation.name || data.city,
+          country: this.selectedLocation.country || data.country_name,
           latitude: this.selectedLocation.latitude || data.latitude,
           longitude: this.selectedLocation.longitude || data.longitude,
-          timezone: data.timezone,
+          timezone: this.selectedLocation.timezone || data.timezone,
         };
-        this.baseLocationName = this.selectedLocation.name;
+        if (this.baseLocationName == '') {
+          this.baseLocationName = this.selectedLocation.name;
+        }
       });
     });
   }
