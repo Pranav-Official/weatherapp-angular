@@ -16,9 +16,6 @@ import {
 export class SelectorComponent implements AfterViewInit {
   @Input() currentSelector: string | undefined;
   @Input() selectors: string[] | undefined;
-  @Input() forecastSelector: string = '';
-  @Input() visualisationSelector: string = '';
-  @Input() initialSelector: string | undefined;
   @Output() selectorChange = new EventEmitter<string>();
 
   ngAfterViewInit() {

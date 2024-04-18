@@ -16,8 +16,7 @@
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="mt-3">
       <app-selector
-        forecastSelector="HOURLY"
-        currentSelector="HOURLY"
+        currentSelector="{{ forecastSeletor }}"
         [selectors]="['HOURLY', 'DAILY']"
       ></app-selector>
     </div>
@@ -33,8 +32,7 @@
       <app-visualization-drop-down></app-visualization-drop-down>
       <div class="pt-3">
         <app-selector
-          visualisationSelector="TEMPERATURE"
-          currentSelector="TEMPERATURE"
+          currentSelector="{{ visualizationSelector }}"
           [selectors]="[
             'TEMPERATURE',
             'WIND SPEED',
@@ -45,6 +43,8 @@
         ></app-selector>
       </div>
     </div>
-    <app-visualization-cart></app-visualization-cart>
+    <div class="data-visualization mt-3">
+      <app-visualization-cart></app-visualization-cart>
+    </div>
   </div>
 </div>
