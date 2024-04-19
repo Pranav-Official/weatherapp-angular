@@ -42,6 +42,10 @@ type selectedLocation = {
 export class HomepageComponent {
   startDate: string = '';
   endDate: string = '';
+  currentTimeFromAPI: string = '';
+  currentTime: string = '';
+  meridiem: string = '';
+
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
@@ -101,10 +105,31 @@ export class HomepageComponent {
           timezone: this.selectedLocation.timezone || data.timezone,
         };
         this.CurrentTimeService.getCurrentTime(
-          this.selectedLocation.latitude,
-          this.selectedLocation.longitude
+          this.selectedLocation.timezone
         ).subscribe((data) => {
           console.log('Current Data Details--->', data);
+          this.currentTimeFromAPI = data.datetime;
+          const timeSection = this.currentTimeFromAPI.slice(11, 19);
+          const hours = parseInt(timeSection.slice(0, 2));
+          const minutes = parseInt(timeSection.slice(3, 5));
+          let minutesString: string = '';
+          let meridiem = 'AM';
+          let hours12 = hours;
+          if (hours > 12) {
+            hours12 = hours - 12;
+            meridiem = 'PM';
+          } else if (hours === 12) {
+            meridiem = 'PM';
+          } else if (hours === 0) {
+            hours12 = 12;
+          }
+          if (minutes < 10) {
+            minutesString = '0' + minutes.toString();
+          } else {
+            minutesString = minutes.toString();
+          }
+          this.currentTime = `${hours12}:${minutesString}`;
+          this.meridiem = `${meridiem}`;
         });
         if (this.baseLocationName == '') {
           this.baseLocationName = this.selectedLocation.name;

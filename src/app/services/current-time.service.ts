@@ -6,19 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CurrentTimeService {
-  baseUrl = 'https://timeapi.io/api/Time/current/';
+  baseUrl = 'https://worldtimeapi.org/api/timezone/';
   constructor(private http: HttpClient) {}
 
-  getCurrentTime(latitude: string, longitude: string): Observable<any> {
+  getCurrentTime(timezone: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    const params = {
-      latitude: latitude.toString(),
-      longitude: longitude.toString(),
-    };
-    return this.http.get<any>(this.baseUrl + 'coordinate', {
-      params: params,
-    });
+    return this.http.get<any>(this.baseUrl + timezone);
   }
 }
