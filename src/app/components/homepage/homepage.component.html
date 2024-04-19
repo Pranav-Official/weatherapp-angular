@@ -17,7 +17,9 @@
     latitude="{{ selectedLocation.latitude }}"
     longitude="{{ selectedLocation.longitude }}"
     timezone="{{ selectedLocation.timezone }}"
-  ></app-weather-widgets>
+  >
+  </app-weather-widgets>
+
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="mt-3">
       <app-selector
@@ -59,6 +61,9 @@
         latitude="{{ selectedLocation.latitude }}"
         longitude="{{ selectedLocation.longitude }}"
         selector="{{ visualizationSelector }}"
+        start_date="{{ startDate }}"
+        end_date="{{ endDate }}"
+        timezone="{{ selectedLocation.timezone }}"
       >
       </app-visualization-cart>
     </div>

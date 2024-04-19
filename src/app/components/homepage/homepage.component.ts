@@ -10,6 +10,7 @@ import { SelectorComponent } from '../selector/selector.component';
 import { WeatherWidgetsComponent } from '../weather-widgets/weather-widgets.component';
 import { ActivatedRoute } from '@angular/router';
 import { VisualizationCartComponent } from '../visualization-cart/visualization-cart.component';
+import { GetLocationFromIpService } from '../../services/get-location-from-ip.service';
 
 type selectedLocation = {
   latitude: string;
@@ -38,8 +39,8 @@ type selectedLocation = {
   providers: [GetLocationFromIpService],
 })
 export class HomepageComponent {
-  startDate: string = '';
-  endDate: string = '';
+  startDate: string = this.getPastDate(3);
+  endDate: string = this.getPastDate(0);
   baseLocationName = '';
   forecastSeletor = 'HOURLY';
   visualizationSelector = 'TEMPERATURE';
@@ -65,13 +66,24 @@ export class HomepageComponent {
     private getLocationFromIpService: GetLocationFromIpService
   ) {}
 
+  getPastDate(dayOffset: number): string {
+    const today = new Date();
+    today.setDate(today.getDate() - dayOffset);
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
   onVisualizationSelectorUpdated(selectedValue: string) {
     this.visualizationSelector = selectedValue;
   }
+
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
-      console.log(' params passed', params);
       if (!params['latitude']) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -87,11 +99,11 @@ export class HomepageComponent {
           console.log('Geolocation is not supported by this browser.');
         }
       } else {
-      this.selectedLocation.country = params['country'];
-      this.selectedLocation.name = params['name'];
-      this.selectedLocation.latitude = params['latitude'];
-      this.selectedLocation.longitude = params['longitude'];
-      this.selectedLocation.timezone = params['timezone'];
+        this.selectedLocation.country = params['country'];
+        this.selectedLocation.name = params['name'];
+        this.selectedLocation.latitude = params['latitude'];
+        this.selectedLocation.longitude = params['longitude'];
+        this.selectedLocation.timezone = params['timezone'];
       }
       this.getLocationFromIpService.getLocation().subscribe((data) => {
         console.log('location from ip', data);
