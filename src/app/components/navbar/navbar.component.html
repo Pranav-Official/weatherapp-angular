@@ -1,6 +1,6 @@
 <div class="flex navbar bg-neutral">
   <div class="flex-1">
-    <a class="btn btn-ghost text-2xl uppercase">
+    <a class="btn btn-ghost text-2xl uppercase" href="/">
       <img src="./../assets/icons/Sunny Day.png" class="w-10" alt="" />
       Weather Now
     </a>
@@ -10,9 +10,9 @@
       <div class="flex flex-col">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search Location"
           (keyup)="onSearchKeyUp($event)"
-          class="input input-sm input-bordered border-2 w-24 md:w-auto"
+          class="input input-sm input-bordered border-2 w-24 md:w-auto me-10"
           id="searchInput"
         />
         <ul
@@ -46,7 +46,6 @@
           </li>
         </ul>
       </div>
-      <button class="btn btn-sm btn-active btn-primary">Search</button>
     </div>
   </div>
 </div>
