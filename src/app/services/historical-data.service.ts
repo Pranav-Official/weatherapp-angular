@@ -22,16 +22,17 @@ export class HistoricalDataService {
   ): Observable<any> {
     let url: string;
     console.log('startDate', start_date);
-    let formattedTimeZone = `${timezone}`.replace('/', '%2F');
+    let formattedTimeZone = `${timezone}`.replace('/', '%2F'); //Format timezone for api
     let queryParams = `latitude=${latitude}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`;
     console.log('before selector');
 
+    //Calculate days for api
     function daysBetween(startDateStr: string, endDateStr: string) {
       const startDate = new Date(startDateStr);
       const endDate = new Date(endDateStr);
 
       if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        return null; // Or throw an error if you prefer
+        return null;
       }
       const timeDiff = endDate.getTime() - startDate.getTime();
       const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));

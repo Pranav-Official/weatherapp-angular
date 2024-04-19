@@ -99,7 +99,6 @@ export class VisualizationCartComponent {
         name: 'temperature',
         series: combinedArray,
       };
-      console.log('Process data: ', processedData);
       return [processedData];
     } else if (this.selector === 'HUMIDITY') {
       this.yAxisLabel = `${this.selector}(%)`;
@@ -114,7 +113,7 @@ export class VisualizationCartComponent {
         series: combinedArray,
       };
       console.log('Process data: ', processedData);
-      return [processedData]; // Explicitly return processed data
+      return [processedData];
     } else if (this.selector === 'WIND SPEED') {
       this.yAxisLabel = `${this.selector}(km/h)`;
       for (let i = 0; i < data.daily.time.length; i++) {
@@ -158,9 +157,8 @@ export class VisualizationCartComponent {
       console.log('Process data: ', processedData);
       return [processedData];
     } else {
-      // Handle other selector values (or lack thereof)
       console.error(`Unsupported selector: ${this.selector}`);
-      return []; // Return an empty array for unsupported selectors
+      return [];
     }
   }
 }

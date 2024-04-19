@@ -106,7 +106,6 @@ export class HomepageComponent {
         this.selectedLocation.timezone = params['timezone'];
       }
       this.getLocationFromIpService.getLocation().subscribe((data) => {
-        console.log('location from ip', data);
         this.selectedLocation = {
           name: this.selectedLocation.name || data.city,
           country: this.selectedLocation.country || data.country_name,
