@@ -35,21 +35,35 @@ type selectedLocation = {
     WeatherWidgetsComponent,
     VisualizationCartComponent,
   ],
+  providers: [GetLocationFromIpService],
 })
 export class HomepageComponent {
-  @Input() selectedLocation: selectedLocation = {
-    name: 'Kochi',
-    country: 'India',
-    latitude: '9.9312',
-    longitude: '76.2673',
-    timezone: 'Asia/Kolkata',
-  };
+  startDate: string = '';
+  endDate: string = '';
+  baseLocationName = '';
   forecastSeletor = 'HOURLY';
   visualizationSelector = 'TEMPERATURE';
-  startDate?: string = '2024-04-01';
-  endDate?: string = '2024-04-10';
   queryParams: any;
-  constructor(private route: ActivatedRoute) {}
+  setEndDate($event: string) {
+    console.log('setEndDate' + $event);
+    this.endDate = $event;
+  }
+  setStartDate($event: string) {
+    console.log('setStartDate' + $event);
+    this.startDate = $event;
+  }
+  @Input() selectedLocation: selectedLocation = {
+    name: '',
+    country: '',
+    latitude: '',
+    longitude: '',
+    timezone: '',
+  };
+
+  constructor(
+    private route: ActivatedRoute,
+    private getLocationFromIpService: GetLocationFromIpService
+  ) {}
 
   onVisualizationSelectorUpdated(selectedValue: string) {
     this.visualizationSelector = selectedValue;
@@ -57,32 +71,45 @@ export class HomepageComponent {
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
+      console.log(' params passed', params);
       if (!params['latitude']) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
-            console.log(
-              'Latitude: ' +
-                position.coords.latitude +
-                ', Longitude: ' +
-                position.coords.longitude
-            );
             this.selectedLocation = {
-              name: 'Kochi',
-              country: 'India',
+              name: '',
+              country: '',
               latitude: position.coords.latitude.toString(),
               longitude: position.coords.longitude.toString(),
-              timezone: 'Asia/Kolkata',
+              timezone: '',
             };
           });
         } else {
           console.log('Geolocation is not supported by this browser.');
         }
-      }
+      } else {
       this.selectedLocation.country = params['country'];
       this.selectedLocation.name = params['name'];
       this.selectedLocation.latitude = params['latitude'];
       this.selectedLocation.longitude = params['longitude'];
       this.selectedLocation.timezone = params['timezone'];
+      }
+      this.getLocationFromIpService.getLocation().subscribe((data) => {
+        console.log('location from ip', data);
+        this.selectedLocation = {
+          name: this.selectedLocation.name || data.city,
+          country: this.selectedLocation.country || data.country_name,
+          latitude: this.selectedLocation.latitude || data.latitude,
+          longitude: this.selectedLocation.longitude || data.longitude,
+          timezone: this.selectedLocation.timezone || data.timezone,
+        };
+        if (this.baseLocationName == '') {
+          this.baseLocationName = this.selectedLocation.name;
+        }
+      });
     });
+  }
+
+  selectorChange(forecastSelectorValue: string) {
+    this.forecastSeletor = forecastSelectorValue;
   }
 }

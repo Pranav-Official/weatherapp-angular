@@ -1,6 +1,11 @@
 <div class="md:px-16 px-6">
   <div class="hero-text-container pt-3">
+    @if (baseLocationName == selectedLocation.name) {
     <p class="hero-label text-xl uppercase font-light">current location</p>
+    } @else {
+    <p class="hero-label text-xl uppercase font-light">Now viewing</p>
+    }
+
     <p class="hero-text text-5xl uppercase font-bold">
       {{ selectedLocation.name
       }}<span class="text-2xl ps-3 font-light">{{
@@ -18,6 +23,7 @@
       <app-selector
         currentSelector="{{ forecastSeletor }}"
         [selectors]="['HOURLY', 'DAILY']"
+        (selectorChange)="selectorChange($event)"
       ></app-selector>
     </div>
 
@@ -25,12 +31,16 @@
       latitude="{{ selectedLocation.latitude }}"
       longitude="{{ selectedLocation.longitude }}"
       timezone="{{ selectedLocation.timezone }}"
+      currentSelector="{{ forecastSeletor }}"
     ></app-info-carousal>
   </div>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="flex flex-row justify-between">
-      <app-visualization-drop-down></app-visualization-drop-down>
-      <div class="pt-3">
+      <app-visualization-drop-down
+        (startDate)="setStartDate($event)"
+        (endDate)="setEndDate($event)"
+      ></app-visualization-drop-down>
+      <div class="pt-3 mt-8">
         <app-selector
           currentSelector="{{ visualizationSelector }}"
           [selectors]="[
