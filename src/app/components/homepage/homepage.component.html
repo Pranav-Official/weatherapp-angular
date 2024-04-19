@@ -26,7 +26,9 @@
     latitude="{{ selectedLocation.latitude }}"
     longitude="{{ selectedLocation.longitude }}"
     timezone="{{ selectedLocation.timezone }}"
-  ></app-weather-widgets>
+  >
+  </app-weather-widgets>
+
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="mt-3">
       <app-selector
@@ -59,11 +61,20 @@
             'HUMIDITY',
             'AIR QUALITY'
           ]"
+          (selectorChange)="onVisualizationSelectorUpdated($event)"
         ></app-selector>
       </div>
     </div>
     <div class="data-visualization mt-3">
-      <app-visualization-cart></app-visualization-cart>
+      <app-visualization-cart
+        latitude="{{ selectedLocation.latitude }}"
+        longitude="{{ selectedLocation.longitude }}"
+        selector="{{ visualizationSelector }}"
+        start_date="{{ startDate }}"
+        end_date="{{ endDate }}"
+        timezone="{{ selectedLocation.timezone }}"
+      >
+      </app-visualization-cart>
     </div>
   </div>
 </div>

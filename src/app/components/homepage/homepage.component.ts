@@ -40,12 +40,15 @@ type selectedLocation = {
   providers: [GetLocationFromIpService, CurrentTimeService],
 })
 export class HomepageComponent {
-  startDate: string = '';
-  endDate: string = '';
+  startDate: string = this.getPastDate(3);
+  endDate: string = this.getPastDate(0);
+  baseLocationName = '';
+  forecastSeletor = 'HOURLY';
+  visualizationSelector = 'TEMPERATURE';
+  queryParams: any;
   currentTimeFromAPI: string = '';
   currentTime: string = '';
   meridiem: string = '';
-
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
@@ -61,19 +64,31 @@ export class HomepageComponent {
     longitude: '',
     timezone: '',
   };
-  baseLocationName = '';
-  forecastSeletor = 'HOURLY';
-  visualizationSelector = 'TEMPERATURE';
-  queryParams: any;
+
   constructor(
     private route: ActivatedRoute,
     private getLocationFromIpService: GetLocationFromIpService,
     private CurrentTimeService: CurrentTimeService
   ) {}
+
+  getPastDate(dayOffset: number): string {
+    const today = new Date();
+    today.setDate(today.getDate() - dayOffset);
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  onVisualizationSelectorUpdated(selectedValue: string) {
+    this.visualizationSelector = selectedValue;
+  }
+
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
-      console.log(' params passed', params);
       if (!params['latitude']) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -96,7 +111,6 @@ export class HomepageComponent {
         this.selectedLocation.timezone = params['timezone'];
       }
       this.getLocationFromIpService.getLocation().subscribe((data) => {
-        console.log('location from ip', data);
         this.selectedLocation = {
           name: this.selectedLocation.name || data.city,
           country: this.selectedLocation.country || data.country_name,

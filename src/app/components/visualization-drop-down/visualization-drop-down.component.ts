@@ -14,6 +14,7 @@ export class VisualizationDropDownComponent {
   currentDate = new Date();
   @Output() startDate = new EventEmitter<string>();
   @Output() endDate = new EventEmitter<string>();
+  @Output() rangeSelector = new EventEmitter<string>();
   onSelectorKeyUp(event: KeyboardEvent) {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -45,6 +46,7 @@ export class VisualizationDropDownComponent {
     var formattedDate = year + '-' + month + '-' + day;
 
     console.log(formattedDate);
+    this.rangeSelector.emit('DAYS');
     this.startDate.emit(formattedDate);
   }
   setDateRangeFromWeeks(weeks: number = this.dateContext) {
@@ -61,6 +63,7 @@ export class VisualizationDropDownComponent {
     var formattedDate = year + '-' + month + '-' + day;
 
     console.log(formattedDate);
+    this.rangeSelector.emit('WEEKS');
     this.startDate.emit(formattedDate);
   }
   setDateRangeFromMonths(months: number = this.dateContext) {
@@ -87,6 +90,7 @@ export class VisualizationDropDownComponent {
     var formattedDate = year + '-' + month + '-' + day;
 
     console.log(formattedDate);
+    this.rangeSelector.emit('MONTHS');
     this.startDate.emit(formattedDate);
   }
   setDateRangeFromYears(years: number = this.dateContext) {
@@ -110,6 +114,7 @@ export class VisualizationDropDownComponent {
     var formattedDate = year + '-' + month + '-' + day;
 
     console.log(formattedDate);
+    this.rangeSelector.emit('YEARS');
     this.startDate.emit(formattedDate);
   }
 
