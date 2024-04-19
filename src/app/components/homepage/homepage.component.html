@@ -45,8 +45,11 @@
   </div>
   <div class="bg-secondary flex flex-col mt-4 rounded-xl px-1 gap-0">
     <div class="flex flex-row justify-between">
-      <app-visualization-drop-down></app-visualization-drop-down>
-      <div class="pt-3">
+      <app-visualization-drop-down
+        (startDate)="setStartDate($event)"
+        (endDate)="setEndDate($event)"
+      ></app-visualization-drop-down>
+      <div class="pt-3 mt-8">
         <app-selector
           currentSelector="{{ visualizationSelector }}"
           [selectors]="[

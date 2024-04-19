@@ -1,11 +1,41 @@
 <div class="sortnfilter">
-  <div class="sortoptn">
-    <select name="selectsort" id="sortingtype">
-      <option value="1" class="option">PAST 10 DAYS</option>
-      <option value="2" class="option">PAST 20 DAYS</option>
-      <option value="3" class="option">PAST 1 MONTH</option>
-      <option value="4" class="option">PAST 5 MONTHS</option>
-      <option value="5" class="option">PAST 10 MONTHS</option>
-    </select>
+  <div class="sortoptn relative">
+    <p class="text-sm m-2">Type a date range here</p>
+    <input
+      type="text"
+      placeholder="Type a date range"
+      (keyup)="onSelectorKeyUp($event)"
+      class="input input-sm input-bordered border-2 w-24 md:w-auto"
+      id="rangePicker"
+    />
+    <ul
+      *ngIf="showDropdown"
+      class="menu bg-white dropdown-content rounded-box w-36 absolute mt-2 shadow-lg"
+      id="searchDropdown"
+    >
+      <li *ngIf="dateContext > 900">
+        <button>Enter a smaller range</button>
+      </li>
+      <li *ngIf="dateContext < 900">
+        <button (click)="setDateRangeFromDays()">
+          Past {{ dateContext }} Day@if (dateContext!=1) {s}
+        </button>
+      </li>
+      <li *ngIf="dateContext < 144">
+        <button (click)="setDateRangeFromWeeks()">
+          Past {{ dateContext }} week@if (dateContext!=1) {s}
+        </button>
+      </li>
+      <li *ngIf="dateContext < 120">
+        <button (click)="setDateRangeFromMonths()">
+          Past {{ dateContext }} month@if (dateContext!=1) {s}
+        </button>
+      </li>
+      <li *ngIf="dateContext < 40">
+        <button (click)="setDateRangeFromYears()">
+          Past {{ dateContext }} year@if (dateContext!=1) {s}
+        </button>
+      </li>
+    </ul>
   </div>
 </div>

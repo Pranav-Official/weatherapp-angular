@@ -40,6 +40,16 @@ type selectedLocation = {
   providers: [GetLocationFromIpService, CurrentTimeService],
 })
 export class HomepageComponent {
+  startDate: string = '';
+  endDate: string = '';
+  setEndDate($event: string) {
+    console.log('setEndDate' + $event);
+    this.endDate = $event;
+  }
+  setStartDate($event: string) {
+    console.log('setStartDate' + $event);
+    this.startDate = $event;
+  }
   @Input() selectedLocation: selectedLocation = {
     name: '',
     country: '',
