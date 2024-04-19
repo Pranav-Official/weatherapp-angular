@@ -165,6 +165,7 @@ export class InfoCarousalComponent implements OnChanges {
   setPositionNumbers(newViewportWidth: number): void {
     if (newViewportWidth >= 850) {
       this.availablePositions = [
+        [0, 0],
         [1, 7],
         [8, 14],
         [15, 21],
@@ -172,6 +173,7 @@ export class InfoCarousalComponent implements OnChanges {
       ];
     } else if (newViewportWidth >= 600) {
       this.availablePositions = [
+        [0, 0],
         [1, 5],
         [6, 10],
         [11, 15],
@@ -180,6 +182,7 @@ export class InfoCarousalComponent implements OnChanges {
       ];
     } else if (newViewportWidth >= 520) {
       this.availablePositions = [
+        [0, 0],
         [1, 3],
         [4, 6],
         [7, 9],
@@ -192,11 +195,21 @@ export class InfoCarousalComponent implements OnChanges {
     }
   }
   goToNextPosition(): void {
-    if (this.currentPositionIndex < this.availablePositions.length - 1) {
-      this.currentPositionIndex++;
-      this.scrollItemToView(
+    console.log(
+      'currentPositionIndex: ' +
         this.availablePositions[this.currentPositionIndex][1]
-      );
+    );
+    if (
+      this.currentSelector == 'HOURLY' ||
+      (this.currentSelector == 'DAILY' &&
+        this.availablePositions[this.currentPositionIndex][1] <= 7)
+    ) {
+      if (this.currentPositionIndex < this.availablePositions.length - 1) {
+        this.currentPositionIndex++;
+        this.scrollItemToView(
+          this.availablePositions[this.currentPositionIndex][1]
+        );
+      }
     }
   }
 
@@ -214,10 +227,12 @@ export class InfoCarousalComponent implements OnChanges {
         'info-carousal'
       );
     if (carousel) {
-      carousel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const item20 = carousel.querySelector('#item' + item);
-      if (item20) {
-        item20.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      carousel.style.overflowX = 'auto'; // or 'scroll'
+      carousel.scrollLeft = 0;
+      const itemElement = carousel.querySelector('#item' + item);
+      if (itemElement) {
+        const itemOffsetLeft = itemElement.offsetLeft; // Get the offset of the item relative to the carousel
+        carousel.scrollLeft = itemOffsetLeft; // Set the scroll position to the offset of the item
       }
     }
   }
@@ -245,6 +260,16 @@ export class InfoCarousalComponent implements OnChanges {
       const newViewportWidth = this.getCurrentViewportWidth();
       this.setPositionNumbers(newViewportWidth);
     });
+
+    const carousel =
+      this.elementRef.nativeElement.ownerDocument.getElementById(
+        'info-carousal'
+      );
+    if (carousel) {
+      carousel.style.overflowX = 'auto'; // or 'scroll'
+      carousel.scrollLeft = 0;
+    }
+    this.currentPositionIndex = 0;
 
     if (this.currentSelector === 'HOURLY') {
       this.time_data = [];
