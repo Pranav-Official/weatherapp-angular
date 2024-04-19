@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-carousel-info-tile',
@@ -14,4 +14,23 @@ export class CarouselInfoTileComponent {
   @Input() wind_speed: number = 0;
   @Input() humidity: number = 0;
   @Input() uv: number = 0;
+  formattedDate: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['time']) {
+      this.formatTime();
+    }
+  }
+
+  private formatTime(): void {
+    if (!this.time) return;
+    const date = new Date(this.time);
+    if (!isNaN(date.getTime())) {
+      const options: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: 'short',
+      };
+      this.time = date.toLocaleDateString('en-US', options);
+    }
+  }
 }

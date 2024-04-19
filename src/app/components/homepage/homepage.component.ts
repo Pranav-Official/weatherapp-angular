@@ -94,4 +94,8 @@ export class HomepageComponent {
       });
     });
   }
+
+  selectorChange(forecastSelectorValue: string) {
+    this.forecastSeletor = forecastSelectorValue;
+  }
 }
