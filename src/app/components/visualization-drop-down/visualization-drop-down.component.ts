@@ -15,6 +15,17 @@ export class VisualizationDropDownComponent {
   @Output() startDate = new EventEmitter<string>();
   @Output() endDate = new EventEmitter<string>();
   @Output() rangeSelector = new EventEmitter<string>();
+
+  setPlaceholder(plaseholder: string) {
+    const inputElement = document.getElementById(
+      'rangePicker'
+    ) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.placeholder = plaseholder;
+      inputElement.value = '';
+    }
+  }
+
   onSelectorKeyUp(event: KeyboardEvent) {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -48,6 +59,8 @@ export class VisualizationDropDownComponent {
     console.log(formattedDate);
     this.rangeSelector.emit('DAYS');
     this.startDate.emit(formattedDate);
+    this.showDropdown = false;
+    this.setPlaceholder(days.toString() + (days === 1 ? ' Day' : ' Days'));
   }
   setDateRangeFromWeeks(weeks: number = this.dateContext) {
     var currentDate = new Date(); // Get the current date
@@ -65,6 +78,8 @@ export class VisualizationDropDownComponent {
     console.log(formattedDate);
     this.rangeSelector.emit('WEEKS');
     this.startDate.emit(formattedDate);
+    this.showDropdown = false;
+    this.setPlaceholder(weeks.toString() + (weeks === 1 ? ' Week' : ' Weeks'));
   }
   setDateRangeFromMonths(months: number = this.dateContext) {
     var currentDate = new Date(); // Get the current date
@@ -92,6 +107,10 @@ export class VisualizationDropDownComponent {
     console.log(formattedDate);
     this.rangeSelector.emit('MONTHS');
     this.startDate.emit(formattedDate);
+    this.showDropdown = false;
+    this.setPlaceholder(
+      months.toString() + (months === 1 ? ' Month' : ' Months')
+    );
   }
   setDateRangeFromYears(years: number = this.dateContext) {
     var currentDate = new Date(); // Get the current date
@@ -116,6 +135,8 @@ export class VisualizationDropDownComponent {
     console.log(formattedDate);
     this.rangeSelector.emit('YEARS');
     this.startDate.emit(formattedDate);
+    this.showDropdown = false;
+    this.setPlaceholder(years.toString() + (years === 1 ? ' Year' : ' Years'));
   }
 
   ngOnInit() {
