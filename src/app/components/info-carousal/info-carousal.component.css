@@ -6,6 +6,8 @@
   gap: 1%;
   height: 45vh;
   margin-top: -2.2vh;
+  overflow-x: scroll;
+  scrollbar-width: 20px;
 }
 
 .carousel-item {

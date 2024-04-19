@@ -152,7 +152,7 @@ export class HomepageComponent {
     });
   }
 
-  selectorChange(forecastSelectorValue: string) {
+  forcastSelectorChange(forecastSelectorValue: string) {
     this.forecastSeletor = forecastSelectorValue;
   }
 }
