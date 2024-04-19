@@ -1,18 +1,27 @@
 <div class="md:px-16 px-6">
-  <div class="hero-text-container pt-3">
-    @if (baseLocationName == selectedLocation.name) {
-    <p class="hero-label text-xl uppercase font-light">current location</p>
-    } @else {
-    <p class="hero-label text-xl uppercase font-light">Now viewing</p>
-    }
+  <div class="flex flex-row">
+    <div class="hero-text-container pt-3 w-full">
+      @if (baseLocationName == selectedLocation.name) {
+      <p class="hero-label text-xl uppercase font-light">current location</p>
+      } @else {
+      <p class="hero-label text-xl uppercase font-light">Now viewing</p>
+      }
 
-    <p class="hero-text text-5xl uppercase font-bold">
-      {{ selectedLocation.name
-      }}<span class="text-2xl ps-3 font-light">{{
-        selectedLocation.country
-      }}</span>
-    </p>
+      <p class="hero-text text-5xl uppercase font-bold">
+        {{ selectedLocation.name
+        }}<span class="text-2xl ps-3 font-light">{{
+          selectedLocation.country
+        }}</span>
+      </p>
+    </div>
+
+    <div class="hero-text-container pt-3 w-full flex justify-end items-end">
+      <p class="hero-text text-5xl uppercase font-bold">
+        10:30<span class="text-2xl font-light">AM</span>
+      </p>
+    </div>
   </div>
+
   <app-weather-widgets
     latitude="{{ selectedLocation.latitude }}"
     longitude="{{ selectedLocation.longitude }}"

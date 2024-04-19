@@ -11,6 +11,7 @@ import { WeatherWidgetsComponent } from '../weather-widgets/weather-widgets.comp
 import { ActivatedRoute } from '@angular/router';
 import { VisualizationCartComponent } from '../visualization-cart/visualization-cart.component';
 import { GetLocationFromIpService } from '../../services/get-location-from-ip.service';
+import { CurrentTimeService } from '../../services/current-time.service';
 
 type selectedLocation = {
   latitude: string;
@@ -36,7 +37,7 @@ type selectedLocation = {
     WeatherWidgetsComponent,
     VisualizationCartComponent,
   ],
-  providers: [GetLocationFromIpService],
+  providers: [GetLocationFromIpService, CurrentTimeService],
 })
 export class HomepageComponent {
   @Input() selectedLocation: selectedLocation = {
@@ -52,7 +53,8 @@ export class HomepageComponent {
   queryParams: any;
   constructor(
     private route: ActivatedRoute,
-    private getLocationFromIpService: GetLocationFromIpService
+    private getLocationFromIpService: GetLocationFromIpService,
+    private CurrentTimeService: CurrentTimeService
   ) {}
   ngOnInit() {
     // Retrieve the query parameters from the route
@@ -88,6 +90,12 @@ export class HomepageComponent {
           longitude: this.selectedLocation.longitude || data.longitude,
           timezone: this.selectedLocation.timezone || data.timezone,
         };
+        this.CurrentTimeService.getCurrentTime(
+          this.selectedLocation.latitude,
+          this.selectedLocation.longitude
+        ).subscribe((data) => {
+          console.log('Current Data Details--->', data);
+        });
         if (this.baseLocationName == '') {
           this.baseLocationName = this.selectedLocation.name;
         }
