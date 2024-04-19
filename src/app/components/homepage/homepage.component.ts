@@ -46,8 +46,14 @@ export class HomepageComponent {
   };
   forecastSeletor = 'HOURLY';
   visualizationSelector = 'TEMPERATURE';
+  startDate?: string = '2024-04-01';
+  endDate?: string = '2024-04-10';
   queryParams: any;
   constructor(private route: ActivatedRoute) {}
+
+  onVisualizationSelectorUpdated(selectedValue: string) {
+    this.visualizationSelector = selectedValue;
+  }
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {

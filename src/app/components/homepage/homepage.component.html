@@ -40,11 +40,17 @@
             'HUMIDITY',
             'AIR QUALITY'
           ]"
+          (selectorChange)="onVisualizationSelectorUpdated($event)"
         ></app-selector>
       </div>
     </div>
     <div class="data-visualization mt-3">
-      <app-visualization-cart></app-visualization-cart>
+      <app-visualization-cart
+        latitude="{{ selectedLocation.latitude }}"
+        longitude="{{ selectedLocation.longitude }}"
+        selector="{{ visualizationSelector }}"
+      >
+      </app-visualization-cart>
     </div>
   </div>
 </div>
