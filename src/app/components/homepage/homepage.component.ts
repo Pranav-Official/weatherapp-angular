@@ -135,21 +135,6 @@ export class HomepageComponent {
           this.baseLocationName = this.selectedLocation.name;
         }
       });
-      if (this.selectedLocation.name === '') {
-        this.getLocationFromIpService.getLocation().subscribe((data) => {
-          console.log('location from ip', data);
-          this.selectedLocation = {
-            name: this.selectedLocation.name || data.city,
-            country: this.selectedLocation.country || data.country_name,
-            latitude: this.selectedLocation.latitude || data.latitude,
-            longitude: this.selectedLocation.longitude || data.longitude,
-            timezone: this.selectedLocation.timezone || data.timezone,
-          };
-          if (this.baseLocationName == '') {
-            this.baseLocationName = this.selectedLocation.name;
-          }
-        });
-      }
     });
   }
 
