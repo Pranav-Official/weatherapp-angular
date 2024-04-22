@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
@@ -55,10 +55,22 @@ export class HistoricalDataService {
         break;
       case 'UV INDEX':
         url = uvIndexUrl;
+        if (numberOfDays && numberOfDays > 92) {
+          return throwError({
+            error: true,
+            message: 'Maximum number of days is 92',
+          });
+        }
         queryParams = `latitude=${latitude}&longitude=${longitude}&daily=uv_index_max&timezone=${formattedTimeZone}&past_days=${numberOfDays}`;
         break;
       case 'AIR QUALITY':
         url = airQualityUrl;
+        if (numberOfDays && numberOfDays > 92) {
+          return throwError({
+            error: true,
+            message: 'Maximum number of days is 92',
+          });
+        }
         queryParams = `latitude=${latitude}&longitude=${longitude}&hourly=pm10,pm2_5&timezone=${formattedTimeZone}&past_days=${numberOfDays}`;
         break;
       default:

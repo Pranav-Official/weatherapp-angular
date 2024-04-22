@@ -40,9 +40,11 @@ export class VisualizationCartComponent {
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
   };
+  errorText: any;
 
   constructor(private historicalDataService: HistoricalDataService) {}
   ngOnInit() {
+    this.errorText = '';
     if (this.latitude && this.longitude) {
       this.fetchData();
     } else {
@@ -52,6 +54,7 @@ export class VisualizationCartComponent {
     }
   }
   ngOnChanges() {
+    this.errorText = '';
     console.log('changes');
 
     if (this.latitude && this.longitude) {
@@ -80,6 +83,13 @@ export class VisualizationCartComponent {
         catchError((error) => {
           this.errorMessage =
             'An error occurred while fetching data: ' + error.message;
+          console.error('Error: ', error.message);
+          if (
+            error.message.split(' ')[error.message.split(' ').length - 1] ==
+            '92'
+          ) {
+            this.errorText = 'Enter range between 1-92 days';
+          }
           return [];
         })
       )
