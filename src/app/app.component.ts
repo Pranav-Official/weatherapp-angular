@@ -18,5 +18,5 @@ type selectedLocation = {
   imports: [RouterOutlet, NavbarComponent],
 })
 export class AppComponent {
-  title = 'weatherapp';
+  title = 'WEATHER NOW';
 }
