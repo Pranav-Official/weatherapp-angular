@@ -172,7 +172,7 @@ export class VisualizationCartComponent {
         },
       ];
       console.log('Process data: ', processedData);
-      return [processedData];
+      return processedData;
     } else {
       console.error(`Unsupported selector: ${this.selector}`);
       return [];
