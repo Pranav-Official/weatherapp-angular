@@ -19,7 +19,10 @@ export class VisualizationCartComponent {
   @Input() timezone: string = '';
 
   errorMessage: string = '';
-  multi?: { name: string | undefined; series: any } | never[];
+  multi?:
+    | { name: string | undefined; series: any }[]
+    | never[]
+    | { name: string | undefined; series: any };
   view: [number, number] = [700, 300];
 
   // options
@@ -85,7 +88,9 @@ export class VisualizationCartComponent {
       });
   }
 
-  private processData(data: any): { name: string; series: any }[] | never[] {
+  private processData(
+    data: any
+  ): { name: string; series: any }[] | never[] | any {
     let combinedArray = [];
     if (this.selector === 'TEMPERATURE') {
       this.yAxisLabel = `${this.selector}(°C)`;
@@ -143,17 +148,19 @@ export class VisualizationCartComponent {
       console.log('Process data: ', processedData);
       return [processedData];
     } else if (this.selector === 'AIR QUALITY') {
-      this.yAxisLabel = `${this.selector}(μg/m³)`;
+      this.yAxisLabel = `${this.selector} PM2.5(μg/m³)`;
       for (let i = 0; i < data.hourly.time.length; i++) {
         combinedArray.push({
           name: data.hourly.time[i].split('T')[0],
-          value: data.hourly.pm10[i],
+          value: data.hourly.pm2_5[i],
         });
       }
-      const processedData = {
-        name: 'air quality',
-        series: combinedArray,
-      };
+      const processedData = [
+        {
+          name: 'pm2_5(μg/m³)',
+          series: combinedArray,
+        },
+      ];
       console.log('Process data: ', processedData);
       return [processedData];
     } else {
