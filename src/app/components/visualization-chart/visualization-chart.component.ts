@@ -7,10 +7,10 @@ import { catchError, map } from 'rxjs';
   standalone: true,
   imports: [NgxChartsModule],
   providers: [HistoricalDataService],
-  templateUrl: './visualization-cart.component.html',
-  styleUrl: './visualization-cart.component.css',
+  templateUrl: './visualization-chart.component.html',
+  styleUrl: './visualization-chart.component.css',
 })
-export class VisualizationCartComponent {
+export class VisualizationChartComponent {
   @Input() latitude?: string;
   @Input() longitude?: string;
   @Input() start_date?: string;
