@@ -9,7 +9,7 @@ import { VisualizationDropDownComponent } from '../visualization-drop-down/visua
 import { SelectorComponent } from '../selector/selector.component';
 import { WeatherWidgetsComponent } from '../weather-widgets/weather-widgets.component';
 import { ActivatedRoute } from '@angular/router';
-import { VisualizationCartComponent } from '../visualization-cart/visualization-cart.component';
+import { VisualizationChartComponent } from '../visualization-chart/visualization-chart.component';
 import { GetLocationFromIpService } from '../../services/get-location-from-ip.service';
 import { CurrentTimeService } from '../../services/current-time.service';
 
@@ -35,7 +35,7 @@ type selectedLocation = {
     VisualizationDropDownComponent,
     SelectorComponent,
     WeatherWidgetsComponent,
-    VisualizationCartComponent,
+    VisualizationChartComponent,
   ],
   providers: [GetLocationFromIpService, CurrentTimeService],
 })
