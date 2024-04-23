@@ -1,0 +1,16 @@
+<div class="toggle-container">
+  <app-selector
+    currentSelector="{{ menuSelector }}"
+    [selectors]="['SAVED', 'HISTORY', 'SETTINGS']"
+    (selectorChange)="setMenuSelector($event)"
+  ></app-selector>
+</div>
+<div class="menu-container mt-4 rounded bg-secondary w-full">
+  @if(menuSelector === 'SAVED') {
+  <div>saved locations</div>
+  } @else if (menuSelector === 'HISTORY') {
+  <div>search history</div>
+  } @else if (menuSelector === 'SETTINGS') {
+  <div>settings</div>
+  }
+</div>

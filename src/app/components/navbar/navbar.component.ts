@@ -4,6 +4,8 @@ import { SearchLocationService } from '../../services/search-location.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { query } from '@angular/animations';
+import { LoginSignupComponent } from '../login-signup/login-signup.component';
+import { MenuDrawerComponent } from '../menu-drawer/menu-drawer.component';
 
 interface LocationDetails {
   results: {
@@ -28,17 +30,39 @@ type selectedLocation = {
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
   providers: [SearchLocationService],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    LoginSignupComponent,
+    MenuDrawerComponent,
+  ],
 })
 export class NavbarComponent {
+  menuSelector: string = '';
   @Input() showDropdown = false;
   @Input() selectedLocation: string | undefined;
   @Input() latitude: string | undefined;
   @Input() longitude: string | undefined;
   searchResults: LocationDetails | null = null;
+  logout() {
+    //fuction to logout by clearing local storage
+    localStorage.clear();
+    window.location.replace('/');
+  }
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('accessToken')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  setMenuSelector(menuSelector: string) {
+    this.menuSelector = menuSelector;
+  }
 
   constructor(
     private searchLocationService: SearchLocationService,
