@@ -4,6 +4,8 @@ import {
   Output,
   EventEmitter,
   AfterViewInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 
 @Component({
@@ -13,7 +15,7 @@ import {
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.css'],
 })
-export class SelectorComponent implements AfterViewInit {
+export class SelectorComponent implements AfterViewInit, OnChanges {
   @Input() currentSelector: string | undefined;
   @Input() selectors: string[] | undefined;
   @Output() selectorChange = new EventEmitter<string>();
@@ -31,6 +33,12 @@ export class SelectorComponent implements AfterViewInit {
           activeTab.classList.add('active');
         }
       }
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentSelector']) {
+      this.setSelector(changes['currentSelector'].currentValue);
+      this.setActiveTab(changes['currentSelector'].currentValue);
     }
   }
 
