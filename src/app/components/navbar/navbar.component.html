@@ -127,7 +127,10 @@
         @if(!isLoggedIn()) {
         <app-login-signup></app-login-signup>
         } @else {
-        <app-menu-drawer menuSelector="{{ menuSelector }}"></app-menu-drawer>
+        <app-menu-drawer
+          menuSelector="{{ menuSelector }}"
+          unitSelector="{{ unitSelector }}"
+        ></app-menu-drawer>
         }
       </div>
     </div>

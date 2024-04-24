@@ -42,11 +42,13 @@ type selectedLocation = {
 })
 export class NavbarComponent {
   menuSelector: string = '';
+  unitSelector: string = '';
   @Input() showDropdown = false;
   @Input() selectedLocation: string | undefined;
   @Input() latitude: string | undefined;
   @Input() longitude: string | undefined;
   searchResults: LocationDetails | null = null;
+
   logout() {
     //fuction to logout by clearing local storage
     localStorage.clear();

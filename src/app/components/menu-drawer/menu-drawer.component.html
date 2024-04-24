@@ -5,12 +5,38 @@
     (selectorChange)="setMenuSelector($event)"
   ></app-selector>
 </div>
-<div class="menu-container mt-4 rounded bg-secondary w-full">
+<div class="menu-container mt-4 rounded bg-secondary w-full pt-1">
   @if(menuSelector === 'SAVED') {
-  <div>saved locations</div>
+  <div class="mt-4">
+    <app-label-card></app-label-card>
+    <app-label-card></app-label-card>
+    <app-label-card></app-label-card>
+  </div>
+
   } @else if (menuSelector === 'HISTORY') {
-  <div>search history</div>
+  <div class="border-t border-black mt-4">
+    <app-label-time></app-label-time>
+    <app-label-time></app-label-time>
+    <app-label-time></app-label-time>
+  </div>
   } @else if (menuSelector === 'SETTINGS') {
-  <div>settings</div>
+  <div class="flex flex-row justify-between items-center m-4">
+    <label for="save-search" class="uppercase text-lg font-bold"
+      >save search history</label
+    >
+    <input
+      type="checkbox"
+      class="toggle [--tglbg:black] bg-white hover:bg-accent border-black"
+      checked
+    />
+  </div>
+  <div class="flex flex-row justify-between items-center m-4">
+    <label for="save-search" class="uppercase text-lg font-bold">units</label>
+    <app-selector
+      currentSelector="{{ menuSelector }}"
+      [selectors]="['METRIC', 'IMPERIAL']"
+      (selectorChange)="setUnitSelector($event)"
+    ></app-selector>
+  </div>
   }
 </div>
