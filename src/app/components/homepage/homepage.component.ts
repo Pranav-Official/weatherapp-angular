@@ -40,6 +40,13 @@ type selectedLocation = {
   providers: [GetLocationFromIpService, CurrentTimeService],
 })
 export class HomepageComponent {
+  isLoggedIn() {
+    if (localStorage.getItem('accessToken')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   startDate: string = this.getPastDate(3);
   endDate: string = this.getPastDate(0);
   baseLocationName = '';
@@ -49,6 +56,7 @@ export class HomepageComponent {
   currentTimeFromAPI: string = '';
   currentTime: string = '';
   meridiem: string = '';
+  locationSaved: boolean = true;
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
