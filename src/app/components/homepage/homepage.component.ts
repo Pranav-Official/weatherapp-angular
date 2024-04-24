@@ -49,6 +49,7 @@ export class HomepageComponent {
   currentTimeFromAPI: string = '';
   currentTime: string = '';
   meridiem: string = '';
+  locationSaved: boolean = true;
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
