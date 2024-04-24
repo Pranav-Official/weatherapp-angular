@@ -2,6 +2,211 @@
   <app-selector
     currentSelector="LOGIN"
     [selectors]="['LOGIN', 'SIGN-UP']"
+    (selectorChange)="setStatus($event)"
   ></app-selector>
 </div>
-<div class="menu-container mt-4 rounded bg-secondary w-full"></div>
+<div class="menu-container mt-4 rounded-lg bg-secondary w-full pt-1">
+  <ng-container *ngIf="currentSelector === 'SIGN-UP'; else LOGIN">
+    <div class="bg-accent border-r-5 p-4 border-2 m-3 rounded-md">
+      <form
+        class="card-body cardbody-color p-0"
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmitSignup()"
+      >
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">ENTER NAME</span>
+          </label>
+
+          <input
+            type="text"
+            name="username"
+            formControlName="userName"
+            class="form-control input input-bordered block w-full"
+            id="userName"
+            aria-describedby="userName"
+            placeholder="Enter Name"
+          />
+
+          @if(f['userName'].errors &&( f['userName'].touched||submittedSignup)){
+          <div class="text-red-600">
+            @if(f['userName'].errors['required']){
+            <small class="text-danger ps-1 lowercase">
+              USER NAME IS REQUIRED
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">ENTER EMAIL</span>
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            formControlName="email"
+            class="form-control input input-bordered block w-full"
+            id="email"
+            aria-describedby="emailHelp"
+            placeholder="Enter Email"
+          />
+          @if(f['email'].errors &&( f['email'].touched||submittedSignup)){
+          <div class="text-red-600">
+            @if(f['email'].errors['required']){
+            <small class="text-danger ps-1 lowercase">
+              EMAIL IS REQUIRED
+            </small>
+            } @if(f['email'].errors['email']){
+            <small class="text-danger ps-1 lowercase">
+              PLEASE ENTER THE EMAIL CORRECTLY
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">ENTER PASSWORD</span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            formControlName="password"
+            class="form-control input input-bordered block w-full"
+            id="password"
+            placeholder="Enter Password"
+          />
+          @if(f['password'].errors &&( f['password'].touched||submittedSignup)){
+          <div class="text-red-600">
+            @if(f['password'].errors['required']){
+            <small class="text-danger ps-1 lowercase">
+              PASSWORD IS REQUIRED
+            </small>
+            } @if(f['password'].errors['pattern']){
+            <small class="text-danger ps-1 lowercase">
+              THE PASSWORD MUST CONTAIN 6 LETTERS AND COMBINATION OF ALPHABET
+              AND NUMBERS AND A SPECIAL CHARACTER
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">CONFIRM PASSWORD</span>
+          </label>
+          <input
+            type="password"
+            name="confirm_password"
+            formControlName="confirm_password"
+            class="form-control input input-bordered block w-full"
+            id="confirm_password"
+            placeholder="Re-enter Password"
+          />
+          @if(f['password'].errors &&( f['password'].touched||submittedSignup)){
+          <div class="text-red-600">
+            @if(f['password'].errors['required']){
+            <small class="text-danger ps-1 lowercase">
+              PASSWORD IS REQUIRED
+            </small>
+            }
+          </div>
+          }
+        </div>
+        <small class="text-danger">
+          {{ commonSignup }}
+        </small>
+        <button type="submit" class="drawer-button btn btn-md btn-primary mt-5">
+          SIGN UP
+        </button>
+        <div>
+          @if(wrongPassword === true){
+          <div class="alert alert-danger" role="alert">
+            ERROR WHILE CREATING A NEW ACCOUNT
+          </div>
+          } @if(accountCreated === true){
+          <div class="alert alert-success" role="alert">
+            SUCCESSFULLY CREATED A NEW ACCOUNT
+          </div>
+          } @if(accountCreated === false){
+          <div class="alert alert-danger" role="alert">
+            ERROR WHILE CREATING A NEW ACCOUNT
+          </div>
+          }
+        </div>
+      </form>
+    </div>
+  </ng-container>
+  <ng-template #LOGIN>
+    <div class="bg-accent border-r-5 p-4 border-2 m-3 rounded-md">
+      <form
+        class="card-body cardbody-color p-0"
+        [formGroup]="loginForm"
+        (submit)="onSubmitLogin()"
+      >
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">ENTER EMAIL</span>
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            formControlName="email"
+            class="form-control input input-bordered block w-full"
+            id="email"
+            aria-describedby="emailHelp"
+            placeholder="Email"
+          />
+          @if(fl['email'].errors &&( fl['email'].touched||submittedLogin)){
+          <div class="text-red-600">
+            @if(fl['email'].errors['required']){
+            <small class="text-danger ps-1 lowercase"> EMAIL IS REQUIRED</small>
+            } @if(fl['email'].errors['email']){
+            <small class="text-danger ps-1 lowercase"> INVALID EMAIL </small>
+            }
+          </div>
+          }
+        </div>
+        <div>
+          <label class="label">
+            <span class="label-text font-bold">ENTER PASSWORD</span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            formControlName="password"
+            class="form-control input input-bordered block w-full"
+            id="password"
+            placeholder="Password"
+          />
+          @if(fl['password'].errors &&(
+          fl['password'].touched||submittedLogin)){
+          <div class="text-red-600">
+            @if(fl['password'].errors['required']){
+            <small class="text-danger ps-1 lowercase"
+              >PASSWORD IS REQUIRED
+            </small>
+            } @if(fl['password'].errors['pattern']){
+            <small class="text-danger ps-1 lowercase">
+              INCORRECT PASSWORD
+            </small>
+            }
+          </div>
+          }
+        </div>
+        <small class="text-danger">
+          {{ commonLogin }}
+        </small>
+        <button type="submit" class="drawer-button btn btn-md btn-primary mt-5">
+          LOGIN
+        </button>
+      </form>
+    </div>
+  </ng-template>
+</div>
