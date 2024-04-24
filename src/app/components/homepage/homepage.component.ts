@@ -40,6 +40,13 @@ type selectedLocation = {
   providers: [GetLocationFromIpService, CurrentTimeService],
 })
 export class HomepageComponent {
+  isLoggedIn() {
+    if (localStorage.getItem('accessToken')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   startDate: string = this.getPastDate(3);
   endDate: string = this.getPastDate(0);
   baseLocationName = '';
