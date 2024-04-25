@@ -14,6 +14,7 @@
         }}</span>
         @if (isLoggedIn()) { @if (locationSaved) {<button
           class="btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
+          (click)="deleteLocation()"
         >
           <img
             src="./../../../assets/icons/bookmark_red.png"
