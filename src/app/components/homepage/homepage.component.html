@@ -22,7 +22,10 @@
           />
           <p class="text-primary">Location Saved</p></button
         >} @else {
-        <button class="btn btn-sm btn-accent border-2 uppercase gap-1 ms-8">
+        <button
+          class="btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
+          (click)="saveLocation()"
+        >
           <img src="./../../../assets/icons/bookmark.png" class="w-5" alt="" />
           <p class="text-primary">Save Location</p>
         </button>

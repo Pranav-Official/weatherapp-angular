@@ -57,7 +57,7 @@ export class HomepageComponent {
   currentTimeFromAPI: string = '';
   currentTime: string = '';
   meridiem: string = '';
-  locationSaved: boolean = true;
+  locationSaved: boolean = false;
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
@@ -99,6 +99,7 @@ export class HomepageComponent {
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
+      this.locationSaved = false;
       if (!params['latitude']) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -158,6 +159,17 @@ export class HomepageComponent {
         if (this.baseLocationName == '') {
           this.baseLocationName = this.selectedLocation.name;
         }
+        this.SavedLocationsService.isLocationSaved(
+          this.selectedLocation.latitude,
+          this.selectedLocation.longitude,
+          this.selectedLocation.timezone,
+          this.selectedLocation.name,
+          this.selectedLocation.country
+        ).subscribe((data) => {
+          if (data.status) {
+            this.locationSaved = true;
+          }
+        });
       });
     });
   }
@@ -172,9 +184,13 @@ export class HomepageComponent {
       this.SavedLocationsService.saveLocation(
         this.selectedLocation.latitude,
         this.selectedLocation.longitude,
-        this.selectedLocation.timezone
+        this.selectedLocation.timezone,
+        this.selectedLocation.name,
+        this.selectedLocation.country
       ).subscribe((data) => {
-        this.locationSaved = true;
+        if (data.status) {
+          this.locationSaved = true;
+        }
       });
     }
   }
