@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -14,6 +15,7 @@ import {
   templateUrl: './login-signup.component.html',
   styleUrl: './login-signup.component.css',
   imports: [SelectorComponent, CommonModule, ReactiveFormsModule],
+  providers: [AuthenticationService],
 })
 export class LoginSignupComponent {
   signupForm!: FormGroup;
@@ -28,7 +30,10 @@ export class LoginSignupComponent {
   commonLogin = '';
   success = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private AuthenticationService: AuthenticationService
+  ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       userName: ['', [Validators.required]],
@@ -46,15 +51,7 @@ export class LoginSignupComponent {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          // Validators.pattern(
-          //   /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
-          // ),
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -71,7 +68,44 @@ export class LoginSignupComponent {
     console.log('Submit Clicked');
     this.commonSignup = '';
     if (this.signupForm.valid) {
-      console.log('Sign up Values ---> ', this.signupForm.value);
+      const { email, password, userName, confirm_password } =
+        this.signupForm.value;
+      console.log('Details ---> ', email, password, userName, confirm_password);
+      if (password === confirm_password) {
+        const username = userName;
+        // const jwt_decoded = localStorage.getItem('access_token');
+        this.AuthenticationService.userSignUp({
+          email,
+          password,
+          username,
+        }).subscribe(
+          (data) => {
+            if (data.status) {
+              localStorage.setItem('accessToken', data.data.token);
+              this.accountCreated = true;
+              setTimeout(() => {
+                this.accountCreated = null;
+                window.location.reload();
+              });
+              this.submittedSignup = false;
+            }
+          },
+          ({ error }) => {
+            this.commonSignup = error.message;
+            this.accountCreated = false;
+            setTimeout(() => {
+              this.accountCreated = null;
+            }, 2000);
+            this.submittedSignup = false;
+          }
+        );
+      } else {
+        this.wrongPassword = true;
+        setTimeout(() => {
+          this.wrongPassword = false;
+        }, 2000);
+        this.submittedSignup = false;
+      }
     }
   }
 
@@ -79,13 +113,28 @@ export class LoginSignupComponent {
     this.submittedLogin = true;
     this.commonLogin = '';
     if (this.loginForm.valid) {
-      console.log('Login Values ---> ', this.loginForm.value);
+      console.log('hiiii');
+      const { email, password } = this.loginForm.value;
+      this.AuthenticationService.userLogin({ email, password }).subscribe(
+        (data) => {
+          if (data.status) {
+            localStorage.setItem('accessToken', data.data.token);
+            console.log('token', data.data.token);
+            console.log(data);
+            this.success = true;
+            window.location.reload();
+          }
+        },
+        ({ error }) => {
+          this.commonLogin = error.message;
+        }
+      );
     }
   }
 
   setStatus($event: string) {
     this.currentSelector = $event;
-    console.log('Selecteoer---->', this.currentSelector);
+    console.log('Selector---->', this.currentSelector);
   }
   @Input() currentSelector: string = '';
 }
