@@ -1,3 +1,4 @@
+import { SavedLocationsService } from './../../services/saved-locations.service';
 import { Component, Input } from '@angular/core';
 import { TemperatureWidgetComponent } from '../temperature-widget/temperature-widget.component';
 import { MapWidgetComponent } from '../map-widget/map-widget.component';
@@ -76,7 +77,8 @@ export class HomepageComponent {
   constructor(
     private route: ActivatedRoute,
     private getLocationFromIpService: GetLocationFromIpService,
-    private CurrentTimeService: CurrentTimeService
+    private CurrentTimeService: CurrentTimeService,
+    private SavedLocationsService: SavedLocationsService
   ) {}
 
   getPastDate(dayOffset: number): string {
@@ -162,5 +164,18 @@ export class HomepageComponent {
 
   forcastSelectorChange(forecastSelectorValue: string) {
     this.forecastSeletor = forecastSelectorValue;
+  }
+
+  saveLocation() {
+    if (!this.locationSaved) {
+      this.locationSaved = false;
+      this.SavedLocationsService.saveLocation(
+        this.selectedLocation.latitude,
+        this.selectedLocation.longitude,
+        this.selectedLocation.timezone
+      ).subscribe((data) => {
+        this.locationSaved = true;
+      });
+    }
   }
 }
