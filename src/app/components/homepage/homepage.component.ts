@@ -194,4 +194,18 @@ export class HomepageComponent {
       });
     }
   }
+
+  deleteLocation() {
+    this.SavedLocationsService.deleteLocation(
+      this.selectedLocation.latitude,
+      this.selectedLocation.longitude,
+      this.selectedLocation.timezone,
+      this.selectedLocation.name,
+      this.selectedLocation.country
+    ).subscribe((data) => {
+      if (data.status) {
+        this.locationSaved = false;
+      }
+    });
+  }
 }

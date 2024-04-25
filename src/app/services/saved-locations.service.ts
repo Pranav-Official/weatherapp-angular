@@ -28,6 +28,27 @@ export class SavedLocationsService {
     );
   }
 
+  deleteLocation(
+    latitude: string,
+    longitude: string,
+    timezone: string,
+    name: string,
+    country: string
+  ): Observable<{ status: boolean; message: string }> {
+    return this.http.delete<{ status: boolean; message: string }>(
+      baseUrl + '/location',
+      {
+        params: {
+          latitude,
+          longitude,
+          timezone,
+          name,
+          country,
+        },
+      }
+    );
+  }
+
   isLocationSaved(
     latitude: string,
     longitude: string,
