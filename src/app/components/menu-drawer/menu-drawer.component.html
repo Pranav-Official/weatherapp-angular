@@ -5,7 +5,9 @@
     (selectorChange)="setMenuSelector($event)"
   ></app-selector>
 </div>
-<div class="menu-container mt-4 rounded bg-secondary w-full pt-1">
+<div
+  class="menu-container mt-4 rounded bg-secondary w-full pt-1 overflow-scroll overflow-x-hidden"
+>
   @if(menuSelector === 'SAVED') {
   <app-saved-locations></app-saved-locations>
   } @else if (menuSelector === 'HISTORY') {
