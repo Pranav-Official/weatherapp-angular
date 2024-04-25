@@ -1,5 +1,8 @@
 <div class="mt-4">
-  <app-label-card></app-label-card>
-  <app-label-card></app-label-card>
-  <app-label-card></app-label-card>
+  <div *ngFor="let data of locationData; let index = index">
+    <app-label-card
+      location="{{ data.location }}"
+      country="{{ data.country }}"
+    ></app-label-card>
+  </div>
 </div>

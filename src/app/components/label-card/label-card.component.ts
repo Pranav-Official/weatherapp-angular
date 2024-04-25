@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-label-card',
@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './label-card.component.html',
   styleUrl: './label-card.component.css',
 })
-export class LabelCardComponent {}
+export class LabelCardComponent {
+  @Input() location: string = '';
+  @Input() country: string = '';
+}
