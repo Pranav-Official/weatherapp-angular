@@ -1,3 +1,4 @@
+import { SavedLocationsService } from './../../services/saved-locations.service';
 import { Component, Input } from '@angular/core';
 import { TemperatureWidgetComponent } from '../temperature-widget/temperature-widget.component';
 import { MapWidgetComponent } from '../map-widget/map-widget.component';
@@ -56,7 +57,7 @@ export class HomepageComponent {
   currentTimeFromAPI: string = '';
   currentTime: string = '';
   meridiem: string = '';
-  locationSaved: boolean = true;
+  locationSaved: boolean = false;
   setEndDate($event: string) {
     console.log('setEndDate' + $event);
     this.endDate = $event;
@@ -76,7 +77,8 @@ export class HomepageComponent {
   constructor(
     private route: ActivatedRoute,
     private getLocationFromIpService: GetLocationFromIpService,
-    private CurrentTimeService: CurrentTimeService
+    private CurrentTimeService: CurrentTimeService,
+    private SavedLocationsService: SavedLocationsService
   ) {}
 
   getPastDate(dayOffset: number): string {
@@ -97,6 +99,7 @@ export class HomepageComponent {
   ngOnInit() {
     // Retrieve the query parameters from the route
     this.route.queryParams.subscribe((params) => {
+      this.locationSaved = false;
       if (!params['latitude']) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -156,11 +159,39 @@ export class HomepageComponent {
         if (this.baseLocationName == '') {
           this.baseLocationName = this.selectedLocation.name;
         }
+        this.SavedLocationsService.isLocationSaved(
+          this.selectedLocation.latitude,
+          this.selectedLocation.longitude,
+          this.selectedLocation.timezone,
+          this.selectedLocation.name,
+          this.selectedLocation.country
+        ).subscribe((data) => {
+          if (data.status) {
+            this.locationSaved = true;
+          }
+        });
       });
     });
   }
 
   forcastSelectorChange(forecastSelectorValue: string) {
     this.forecastSeletor = forecastSelectorValue;
+  }
+
+  saveLocation() {
+    if (!this.locationSaved) {
+      this.locationSaved = false;
+      this.SavedLocationsService.saveLocation(
+        this.selectedLocation.latitude,
+        this.selectedLocation.longitude,
+        this.selectedLocation.timezone,
+        this.selectedLocation.name,
+        this.selectedLocation.country
+      ).subscribe((data) => {
+        if (data.status) {
+          this.locationSaved = true;
+        }
+      });
+    }
   }
 }
