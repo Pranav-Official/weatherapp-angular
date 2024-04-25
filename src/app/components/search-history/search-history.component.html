@@ -1,0 +1,9 @@
+<div class="border-t border-black mt-4">
+  <div *ngFor="let data of locationData; let index = index">
+    <app-label-time
+      location="{{ data.location }}"
+      country="{{ data.country }}"
+      time="{{ data.time }}"
+    ></app-label-time>
+  </div>
+</div>

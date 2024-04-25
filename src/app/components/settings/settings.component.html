@@ -1,0 +1,18 @@
+<div class="flex flex-row justify-between items-center m-4">
+  <label for="save-search" class="uppercase text-lg font-bold"
+    >save search history</label
+  >
+  <input
+    type="checkbox"
+    class="toggle [--tglbg:black] bg-white hover:bg-accent border-black"
+    checked
+  />
+</div>
+<div class="flex flex-row justify-between items-center m-4">
+  <label for="save-search" class="uppercase text-lg font-bold">units</label>
+  <app-selector
+    currentSelector="{{ unitSelector }}"
+    [selectors]="['METRIC', 'IMPERIAL']"
+    (selectorChange)="setUnitSelector($event)"
+  ></app-selector>
+</div>

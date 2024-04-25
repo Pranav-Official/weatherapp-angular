@@ -5,12 +5,12 @@
     (selectorChange)="setMenuSelector($event)"
   ></app-selector>
 </div>
-<div class="menu-container mt-4 rounded bg-secondary w-full">
+<div class="menu-container mt-4 rounded bg-secondary w-full pt-1">
   @if(menuSelector === 'SAVED') {
-  <div>saved locations</div>
+  <app-saved-locations></app-saved-locations>
   } @else if (menuSelector === 'HISTORY') {
-  <div>search history</div>
+  <app-search-history></app-search-history>
   } @else if (menuSelector === 'SETTINGS') {
-  <div>settings</div>
+  <app-settings></app-settings>
   }
 </div>

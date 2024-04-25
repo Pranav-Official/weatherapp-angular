@@ -4,15 +4,12 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jest"  // New 
+      "jest" // New
     ]
   },
   "files": [
     "src/setup.jest.ts", // NEW Add this so that the file will be found
     "src/polyfills.ts"
   ],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }
