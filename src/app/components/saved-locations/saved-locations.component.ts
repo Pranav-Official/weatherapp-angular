@@ -18,7 +18,7 @@ export class SavedLocationsComponent implements OnInit {
     this.SavedLocationsService.getsavedLocations().subscribe((data) => {
       if (data.status) {
         this.locationData = data.data;
-        console.log(this.locationData);
+        console.log(' subscribed data', this.locationData);
       }
     });
   }
