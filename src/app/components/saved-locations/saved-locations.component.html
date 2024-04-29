@@ -1,4 +1,4 @@
-<div class="mt-4">
+<div class="mt-4" (focus)="onFocus()">
   <div *ngFor="let data of locationData; let index = index">
     <app-label-card
       location="{{ data.name }}"

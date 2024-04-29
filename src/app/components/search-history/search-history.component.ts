@@ -39,14 +39,11 @@ export class SearchHistoryComponent implements OnInit {
 
   calculateTimeAgo(dateString: string): string {
     // Replace space with T to create a valid date string
-    console.log('date input ', dateString);
+
     let date = new Date(dateString);
     let currrentDateTime = new Date();
     currrentDateTime = this.adjustForTimezone(currrentDateTime);
     const diffTime = Math.abs(currrentDateTime.getTime() - date.getTime());
-    console.log('diffTime', diffTime);
-    console.log('current date time ', currrentDateTime.toJSON());
-    console.log('date ', date.toJSON());
     const seconds = Math.floor(diffTime / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);

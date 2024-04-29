@@ -67,12 +67,10 @@ export class LoginSignupComponent {
 
   onSubmitSignup() {
     this.submittedSignup = true;
-    console.log('Submit Clicked');
     this.commonSignup = '';
     if (this.signupForm.valid) {
       const { email, password, userName, confirm_password } =
         this.signupForm.value;
-      console.log('Details ---> ', email, password, userName, confirm_password);
       if (password === confirm_password) {
         const username = userName;
         // const jwt_decoded = localStorage.getItem('access_token');
@@ -127,7 +125,6 @@ export class LoginSignupComponent {
     this.submittedLogin = true;
     this.commonLogin = '';
     if (this.loginForm.valid) {
-      console.log('hiiii');
       const { email, password } = this.loginForm.value;
       this.AuthenticationService.userLogin({ email, password }).subscribe(
         (data) => {
@@ -158,7 +155,6 @@ export class LoginSignupComponent {
 
   setStatus($event: string) {
     this.currentSelector = $event;
-    console.log('Selector---->', this.currentSelector);
   }
   @Input() currentSelector: string = '';
 }

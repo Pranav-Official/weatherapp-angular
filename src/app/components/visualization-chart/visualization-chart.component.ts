@@ -55,7 +55,6 @@ export class VisualizationChartComponent {
   }
   ngOnChanges() {
     this.errorText = '';
-    console.log('changes');
 
     if (this.latitude && this.longitude) {
       this.fetchData();

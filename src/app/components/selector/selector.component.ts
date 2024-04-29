@@ -22,7 +22,7 @@ export class SelectorComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     if (this.selectors) {
-      const firstSelector = this.selectors[0];
+      const firstSelector = this.currentSelector;
 
       if (firstSelector) {
         const activeTab = document.querySelector(

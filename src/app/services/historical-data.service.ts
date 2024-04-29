@@ -21,10 +21,8 @@ export class HistoricalDataService {
     timezone?: string
   ): Observable<any> {
     let url: string;
-    console.log('startDate', start_date);
     let formattedTimeZone = `${timezone}`.replace('/', '%2F'); //Format timezone for api
     let queryParams = `latitude=${latitude}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`;
-    console.log('before selector');
 
     //Calculate days for api
     function daysBetween(startDateStr: string, endDateStr: string) {
@@ -85,7 +83,6 @@ export class HistoricalDataService {
         console.log('Error', selector);
         return throwError('Invalid selector');
     }
-    console.log('URLS', `${url}?${queryParams}`);
     return this.http.get<any>(`${url}?${queryParams}`);
   }
 }

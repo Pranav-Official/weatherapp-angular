@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { LabelCardComponent } from '../label-card/label-card.component';
 import { CommonModule } from '@angular/common';
 import { SavedLocationsService } from '../../services/saved-locations.service';
@@ -18,8 +18,11 @@ export class SavedLocationsComponent implements OnInit {
     this.SavedLocationsService.getsavedLocations().subscribe((data) => {
       if (data.status) {
         this.locationData = data.data;
-        console.log(' subscribed data', this.locationData);
       }
     });
+  }
+
+  onFocus() {
+    this.ngOnInit();
   }
 }

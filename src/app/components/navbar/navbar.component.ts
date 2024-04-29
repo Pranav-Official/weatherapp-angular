@@ -1,5 +1,12 @@
 import { SearchHistoryService } from './../../services/search-history.service';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchLocationService } from '../../services/search-location.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -41,7 +48,7 @@ type selectedLocation = {
     MenuDrawerComponent,
   ],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   menuSelector: string = '';
   unitSelector: string = '';
   @Input() showDropdown = false;
@@ -49,6 +56,7 @@ export class NavbarComponent {
   @Input() latitude: string | undefined;
   @Input() longitude: string | undefined;
   searchResults: LocationDetails | null = null;
+  resposiveMenuVisibility: boolean = false;
 
   logout() {
     //fuction to logout by clearing local storage
@@ -64,14 +72,30 @@ export class NavbarComponent {
   }
 
   setMenuSelector(menuSelector: string) {
-    this.menuSelector = menuSelector;
+    this.menuSelector = 'SETTINGS';
+    setTimeout(() => {
+      this.menuSelector = menuSelector;
+    }, 10);
   }
 
   constructor(
     private searchLocationService: SearchLocationService,
     private SearchHistoryService: SearchHistoryService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) {}
+  ngOnInit(): void {
+    window.addEventListener('resize', (event) => {
+      if (
+        this.elementRef.nativeElement.ownerDocument.defaultView.innerWidth >=
+        890
+      ) {
+        this.resposiveMenuVisibility = false;
+      } else {
+        this.resposiveMenuVisibility = true;
+      }
+    });
+  }
 
   onSearchKeyUp(event: KeyboardEvent) {
     const inputElement = event.target as HTMLInputElement;

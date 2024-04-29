@@ -56,7 +56,6 @@ export class VisualizationDropDownComponent {
 
     var formattedDate = year + '-' + month + '-' + day;
 
-    console.log(formattedDate);
     this.rangeSelector.emit('DAYS');
     this.startDate.emit(formattedDate);
     this.showDropdown = false;
@@ -75,7 +74,6 @@ export class VisualizationDropDownComponent {
 
     var formattedDate = year + '-' + month + '-' + day;
 
-    console.log(formattedDate);
     this.rangeSelector.emit('WEEKS');
     this.startDate.emit(formattedDate);
     this.showDropdown = false;
@@ -104,7 +102,6 @@ export class VisualizationDropDownComponent {
 
     var formattedDate = year + '-' + month + '-' + day;
 
-    console.log(formattedDate);
     this.rangeSelector.emit('MONTHS');
     this.startDate.emit(formattedDate);
     this.showDropdown = false;
@@ -132,7 +129,6 @@ export class VisualizationDropDownComponent {
 
     var formattedDate = year + '-' + month + '-' + day;
 
-    console.log(formattedDate);
     this.rangeSelector.emit('YEARS');
     this.startDate.emit(formattedDate);
     this.showDropdown = false;

@@ -59,11 +59,9 @@ export class HomepageComponent {
   meridiem: string = '';
   locationSaved: boolean = false;
   setEndDate($event: string) {
-    console.log('setEndDate' + $event);
     this.endDate = $event;
   }
   setStartDate($event: string) {
-    console.log('setStartDate' + $event);
     this.startDate = $event;
   }
   @Input() selectedLocation: selectedLocation = {
@@ -101,19 +99,58 @@ export class HomepageComponent {
     this.route.queryParams.subscribe((params) => {
       this.locationSaved = false;
       if (!params['latitude']) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            this.selectedLocation = {
-              name: '',
-              country: '',
-              latitude: position.coords.latitude.toString(),
-              longitude: position.coords.longitude.toString(),
-              timezone: '',
-            };
+        this.getLocationFromIpService.getLocation().subscribe((data) => {
+          this.selectedLocation = {
+            name: this.selectedLocation.name || data.city,
+            country: this.selectedLocation.country || data.country_name,
+            latitude: this.selectedLocation.latitude || data.latitude,
+            longitude: this.selectedLocation.longitude || data.longitude,
+            timezone: this.selectedLocation.timezone || data.timezone,
+          };
+          this.CurrentTimeService.getCurrentTime(
+            this.selectedLocation.timezone
+          ).subscribe((data) => {
+            this.currentTimeFromAPI = data.datetime;
+            const timeSection = this.currentTimeFromAPI.slice(11, 19);
+            const hours = parseInt(timeSection.slice(0, 2));
+            const minutes = parseInt(timeSection.slice(3, 5));
+            let minutesString: string = '';
+            let meridiem = 'AM';
+            let hours12 = hours;
+            if (hours > 12) {
+              hours12 = hours - 12;
+              meridiem = 'PM';
+            } else if (hours === 12) {
+              meridiem = 'PM';
+            } else if (hours === 0) {
+              hours12 = 12;
+            }
+            if (minutes < 10) {
+              minutesString = '0' + minutes.toString();
+            } else {
+              minutesString = minutes.toString();
+            }
+            this.currentTime = `${hours12}:${minutesString}`;
+            this.meridiem = `${meridiem}`;
+            if (this.baseLocationName == '' && !params['latitude']) {
+              this.baseLocationName = this.selectedLocation.name;
+            }
+            this.SavedLocationsService.isLocationSaved(
+              this.selectedLocation.latitude,
+              this.selectedLocation.longitude,
+              this.selectedLocation.timezone,
+              this.selectedLocation.name,
+              this.selectedLocation.country
+            ).subscribe((data) => {
+              if (data.status) {
+                this.locationSaved = true;
+              }
+            });
           });
-        } else {
-          console.log('Geolocation is not supported by this browser.');
-        }
+          if (this.baseLocationName == '') {
+            this.baseLocationName = this.selectedLocation.name;
+          }
+        });
       } else {
         this.selectedLocation.country = params['country'];
         this.selectedLocation.name = params['name'];
@@ -121,42 +158,32 @@ export class HomepageComponent {
         this.selectedLocation.longitude = params['longitude'];
         this.selectedLocation.timezone = params['timezone'];
       }
-      this.getLocationFromIpService.getLocation().subscribe((data) => {
-        this.selectedLocation = {
-          name: this.selectedLocation.name || data.city,
-          country: this.selectedLocation.country || data.country_name,
-          latitude: this.selectedLocation.latitude || data.latitude,
-          longitude: this.selectedLocation.longitude || data.longitude,
-          timezone: this.selectedLocation.timezone || data.timezone,
-        };
-        this.CurrentTimeService.getCurrentTime(
-          this.selectedLocation.timezone
-        ).subscribe((data) => {
-          console.log('Current Data Details--->', data);
-          this.currentTimeFromAPI = data.datetime;
-          const timeSection = this.currentTimeFromAPI.slice(11, 19);
-          const hours = parseInt(timeSection.slice(0, 2));
-          const minutes = parseInt(timeSection.slice(3, 5));
-          let minutesString: string = '';
-          let meridiem = 'AM';
-          let hours12 = hours;
-          if (hours > 12) {
-            hours12 = hours - 12;
-            meridiem = 'PM';
-          } else if (hours === 12) {
-            meridiem = 'PM';
-          } else if (hours === 0) {
-            hours12 = 12;
-          }
-          if (minutes < 10) {
-            minutesString = '0' + minutes.toString();
-          } else {
-            minutesString = minutes.toString();
-          }
-          this.currentTime = `${hours12}:${minutesString}`;
-          this.meridiem = `${meridiem}`;
-        });
-        if (this.baseLocationName == '') {
+      this.CurrentTimeService.getCurrentTime(
+        this.selectedLocation.timezone
+      ).subscribe((data) => {
+        this.currentTimeFromAPI = data.datetime;
+        const timeSection = this.currentTimeFromAPI.slice(11, 19);
+        const hours = parseInt(timeSection.slice(0, 2));
+        const minutes = parseInt(timeSection.slice(3, 5));
+        let minutesString: string = '';
+        let meridiem = 'AM';
+        let hours12 = hours;
+        if (hours > 12) {
+          hours12 = hours - 12;
+          meridiem = 'PM';
+        } else if (hours === 12) {
+          meridiem = 'PM';
+        } else if (hours === 0) {
+          hours12 = 12;
+        }
+        if (minutes < 10) {
+          minutesString = '0' + minutes.toString();
+        } else {
+          minutesString = minutes.toString();
+        }
+        this.currentTime = `${hours12}:${minutesString}`;
+        this.meridiem = `${meridiem}`;
+        if (this.baseLocationName == '' && !params['latitude']) {
           this.baseLocationName = this.selectedLocation.name;
         }
         this.SavedLocationsService.isLocationSaved(
