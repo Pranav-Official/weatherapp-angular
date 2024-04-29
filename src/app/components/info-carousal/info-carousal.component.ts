@@ -195,10 +195,6 @@ export class InfoCarousalComponent implements OnChanges {
     }
   }
   goToNextPosition(): void {
-    console.log(
-      'currentPositionIndex: ' +
-        this.availablePositions[this.currentPositionIndex][1]
-    );
     if (
       this.currentSelector == 'HOURLY' ||
       (this.currentSelector == 'DAILY' &&
@@ -285,7 +281,6 @@ export class InfoCarousalComponent implements OnChanges {
       this.daily_temperature_dataset = [];
       this.daily_uv_dataset = [];
       this.daily_weather_code = [];
-      console.log('Inside Hourly-------------->');
       this.WeatherDataService.getHourlyWeatherData(
         this.latitude,
         this.longitude,
@@ -299,7 +294,7 @@ export class InfoCarousalComponent implements OnChanges {
             const timePart = dateTimeString.substring(11);
             this.time.push(timePart);
           }
-          console.log('Hourly Time -----------> ', this.time);
+
           this.temperature = this.weather_data.hourly.temperature_2m;
           this.humidity = this.weather_data.hourly.relative_humidity_2m;
           this.wind_speed = this.weather_data.hourly.wind_speed_10m;
@@ -332,7 +327,6 @@ export class InfoCarousalComponent implements OnChanges {
       this.humidity = [];
       this.uv = [];
       this.weather_code = [];
-      console.log("Inside 'DAILY--------------->");
       this.WeatherDataService.getDailyWeatherData(
         this.latitude,
         this.longitude,
@@ -340,9 +334,7 @@ export class InfoCarousalComponent implements OnChanges {
         this.timezone
       ).subscribe((data) => {
         this.weather_data_daily = data;
-        console.log('Daily Weather Data---------> ', this.weather_data_daily);
         this.time = this.weather_data_daily.daily.time;
-        console.log('Time Data');
         this.daily_temperature_dataset =
           this.weather_data_daily.daily.temperature_2m_max;
         this.daily_temperature_dataset.forEach(
@@ -358,7 +350,6 @@ export class InfoCarousalComponent implements OnChanges {
           if (uvObject === null) uvObject = -999;
           this.uv.push(parseFloat(uvObject.toFixed(1)));
         });
-        console.log('UV Data----->', this.uv);
         this.daily_weather_code = this.weather_data_daily.daily.weather_code;
         this.daily_weather_code.forEach(
           (weather_code_object: number | null) => {
@@ -394,7 +385,6 @@ export class InfoCarousalComponent implements OnChanges {
             return parseFloat(value.toFixed(0));
           }
         );
-        console.log(formattedHumidity);
         this.humidity = formattedHumidity;
 
         let dailySumForAverageWindSpeed = 0;

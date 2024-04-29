@@ -55,7 +55,6 @@ export class VisualizationChartComponent {
   }
   ngOnChanges() {
     this.errorText = '';
-    console.log('changes');
 
     if (this.latitude && this.longitude) {
       this.fetchData();
@@ -103,7 +102,11 @@ export class VisualizationChartComponent {
   ): { name: string; series: any }[] | never[] | any {
     let combinedArray = [];
     if (this.selector === 'TEMPERATURE') {
-      this.yAxisLabel = `${this.selector}(°C)`;
+      this.yAxisLabel = `${
+        localStorage.getItem('preferred_units') === 'imperial'
+          ? 'TEMPERATURE(F)'
+          : 'TEMPERATURE(°C)'
+      }`;
       for (let i = 0; i < data.daily.time.length; i++) {
         combinedArray.push({
           name: data.daily.time[i],
@@ -130,7 +133,11 @@ export class VisualizationChartComponent {
       console.log('Process data: ', processedData);
       return [processedData];
     } else if (this.selector === 'WIND SPEED') {
-      this.yAxisLabel = `${this.selector}(km/h)`;
+      this.yAxisLabel = `${
+        localStorage.getItem('preferred_units') === 'imperial'
+          ? 'WIND SPEED(MPH)'
+          : 'WIND SPEED(KPH)'
+      }`;
       for (let i = 0; i < data.daily.time.length; i++) {
         combinedArray.push({
           name: data.daily.time[i],

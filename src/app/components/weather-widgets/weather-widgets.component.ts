@@ -83,6 +83,13 @@ function adjustTime(time: string, utcOffset: string): string {
   providers: [WeatherDataService, WeatherIconService, TimeDataService],
 })
 export class WeatherWidgetsComponent implements OnChanges {
+  isImperial() {
+    if (localStorage.getItem('preferred_units') === 'imperial') {
+      return true;
+    } else {
+      return false;
+    }
+  }
   @Input() latitude: any;
   @Input() longitude: any;
   @Input() timezone: string = '';
@@ -126,11 +133,7 @@ export class WeatherWidgetsComponent implements OnChanges {
         this.curentData.wind_speed = data.current.wind_speed_10m;
         this.sunriseTimeStamp = data.daily.sunrise[0];
         this.sunsetTimeStamp = data.daily.sunset[0];
-        console.log(
-          ' sunrise and sunset',
-          this.sunriseTimeStamp,
-          this.sunsetTimeStamp
-        );
+
         this.timeDataService.getTimeData(this.timezone).subscribe((data) => {
           const currentTimestamp = data.datetime;
           const utsOffset = data.utc_offset;
@@ -145,7 +148,6 @@ export class WeatherWidgetsComponent implements OnChanges {
     this.weatherDataService
       .getCurrentAirData(this.latitude, this.longitude, this.timezone)
       .subscribe((data) => {
-        console.log(data);
         if (parseInt(data.current.european_aqi) > 100) {
           this.curentData.air_quality = 'severe';
         } else if (parseInt(data.current.european_aqi) > 80) {

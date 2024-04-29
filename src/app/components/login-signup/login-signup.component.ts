@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -15,7 +16,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   templateUrl: './login-signup.component.html',
   styleUrl: './login-signup.component.css',
   imports: [SelectorComponent, CommonModule, ReactiveFormsModule],
-  providers: [AuthenticationService],
+  providers: [],
 })
 export class LoginSignupComponent {
   signupForm!: FormGroup;
@@ -32,7 +33,8 @@ export class LoginSignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private AuthenticationService: AuthenticationService
+    private AuthenticationService: AuthenticationService,
+    private settingsService: SettingsService
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -65,12 +67,10 @@ export class LoginSignupComponent {
 
   onSubmitSignup() {
     this.submittedSignup = true;
-    console.log('Submit Clicked');
     this.commonSignup = '';
     if (this.signupForm.valid) {
       const { email, password, userName, confirm_password } =
         this.signupForm.value;
-      console.log('Details ---> ', email, password, userName, confirm_password);
       if (password === confirm_password) {
         const username = userName;
         // const jwt_decoded = localStorage.getItem('access_token');
@@ -82,6 +82,18 @@ export class LoginSignupComponent {
           (data) => {
             if (data.status) {
               localStorage.setItem('accessToken', data.data.token);
+              this.settingsService.getSettings().subscribe((data) => {
+                if (data.status) {
+                  localStorage.setItem(
+                    'save_seach_history',
+                    data.data.save_seach_history
+                  );
+                  localStorage.setItem(
+                    'preferred_units',
+                    data.data.prefrered_units
+                  );
+                }
+              });
               this.accountCreated = true;
               setTimeout(() => {
                 this.accountCreated = null;
@@ -113,14 +125,23 @@ export class LoginSignupComponent {
     this.submittedLogin = true;
     this.commonLogin = '';
     if (this.loginForm.valid) {
-      console.log('hiiii');
       const { email, password } = this.loginForm.value;
       this.AuthenticationService.userLogin({ email, password }).subscribe(
         (data) => {
           if (data.status) {
             localStorage.setItem('accessToken', data.data.token);
-            console.log('token', data.data.token);
-            console.log(data);
+            this.settingsService.getSettings().subscribe((data) => {
+              if (data.status) {
+                localStorage.setItem(
+                  'save_search_history',
+                  data.data.save_seach_history
+                );
+                localStorage.setItem(
+                  'preferred_units',
+                  data.data.prefrered_units
+                );
+              }
+            });
             this.success = true;
             window.location.reload();
           }
@@ -134,7 +155,6 @@ export class LoginSignupComponent {
 
   setStatus($event: string) {
     this.currentSelector = $event;
-    console.log('Selector---->', this.currentSelector);
   }
   @Input() currentSelector: string = '';
 }

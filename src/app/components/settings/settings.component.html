@@ -5,7 +5,8 @@
   <input
     type="checkbox"
     class="toggle [--tglbg:black] bg-white hover:bg-accent border-black"
-    checked
+    id="save-search"
+    (change)="setSaveSearch($event)"
   />
 </div>
 <div class="flex flex-row justify-between items-center m-4">

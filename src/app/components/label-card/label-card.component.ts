@@ -25,8 +25,9 @@ export class LabelCardComponent {
     timezone: string
   ) {
     this.router.navigate(['/'], {
-      queryParams: { latitude, longitude, name, country, timezone },
+      queryParams: { latitude, longitude, country, name, timezone },
     });
+
     // // this.showDropdown = false;
     // const inputElement = document.getElementById(
     //   'searchInput'

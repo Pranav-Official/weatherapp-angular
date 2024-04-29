@@ -21,10 +21,8 @@ export class HistoricalDataService {
     timezone?: string
   ): Observable<any> {
     let url: string;
-    console.log('startDate', start_date);
     let formattedTimeZone = `${timezone}`.replace('/', '%2F'); //Format timezone for api
     let queryParams = `latitude=${latitude}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`;
-    console.log('before selector');
 
     //Calculate days for api
     function daysBetween(startDateStr: string, endDateStr: string) {
@@ -43,7 +41,11 @@ export class HistoricalDataService {
     switch (selector) {
       case 'TEMPERATURE':
         url = baseUrl;
-        queryParams += `&daily=temperature_2m_max&timezone=${formattedTimeZone}`;
+        queryParams += `&daily=temperature_2m_max&timezone=${formattedTimeZone}${
+          localStorage.getItem('preferred_units') === 'imperial'
+            ? '&temperature_unit=fahrenheit'
+            : ''
+        }`;
         break;
       case 'HUMIDITY':
         url = baseUrl;
@@ -51,7 +53,11 @@ export class HistoricalDataService {
         break;
       case 'WIND SPEED':
         url = baseUrl;
-        queryParams += `&daily=wind_speed_10m_max&timezone=${formattedTimeZone}`;
+        queryParams += `&daily=wind_speed_10m_max&timezone=${formattedTimeZone}${
+          localStorage.getItem('preferred_units') === 'imperial'
+            ? '&wind_speed_unit=mph'
+            : ''
+        }`;
         break;
       case 'UV INDEX':
         url = uvIndexUrl;
@@ -77,7 +83,6 @@ export class HistoricalDataService {
         console.log('Error', selector);
         return throwError('Invalid selector');
     }
-    console.log('URLS', `${url}?${queryParams}`);
     return this.http.get<any>(`${url}?${queryParams}`);
   }
 }

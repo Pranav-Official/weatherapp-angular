@@ -1,8 +1,18 @@
 .flex-1 {
   flex-shrink: 1;
 }
+
 @media (max-width: 450px) {
   .flex-1 {
     flex: 0 0 50%;
   }
 }
+
+/* @media (max-width: 890px) {
+  .responsive-menu {
+    visibility: visible !important;
+  }
+  .resposive-navbar {
+    display: none !important;
+  }
+} */

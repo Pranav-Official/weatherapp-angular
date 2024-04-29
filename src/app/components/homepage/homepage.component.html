@@ -13,7 +13,7 @@
           selectedLocation.country
         }}</span>
         @if (isLoggedIn()) { @if (locationSaved) {<button
-          class="btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
+          class="save-location-button btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
           (click)="deleteLocation()"
         >
           <img
@@ -24,7 +24,7 @@
           <p class="text-primary">Location Saved</p></button
         >} @else {
         <button
-          class="btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
+          class="save-location-button btn btn-sm btn-accent border-2 uppercase gap-1 ms-8"
           (click)="saveLocation()"
         >
           <img src="./../../../assets/icons/bookmark.png" class="w-5" alt="" />

@@ -8,6 +8,13 @@ import { Component, Input } from '@angular/core';
   styleUrl: './temperature-widget.component.css',
 })
 export class TemperatureWidgetComponent {
+  isImperial() {
+    if (localStorage.getItem('preferred_units') === 'imperial') {
+      return true;
+    } else {
+      return false;
+    }
+  }
   @Input() temperature: string = '';
   @Input() temperature_max: string = '';
   @Input() temperature_min: string = '';

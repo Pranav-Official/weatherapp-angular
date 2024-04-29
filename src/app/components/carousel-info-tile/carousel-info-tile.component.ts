@@ -8,6 +8,13 @@ import { Component, Input, SimpleChanges } from '@angular/core';
   styleUrl: './carousel-info-tile.component.css',
 })
 export class CarouselInfoTileComponent {
+  isImperial() {
+    if (localStorage.getItem('preferred_units') === 'imperial') {
+      return true;
+    } else {
+      return false;
+    }
+  }
   @Input() time: string = '0';
   @Input() weather_icon_url: string | undefined = '';
   @Input() temperature: number = 0;
