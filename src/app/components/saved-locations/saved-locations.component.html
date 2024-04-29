@@ -1,8 +1,11 @@
 <div class="mt-4">
   <div *ngFor="let data of locationData; let index = index">
     <app-label-card
-      location="{{ data.location }}"
+      location="{{ data.name }}"
       country="{{ data.country }}"
+      latitude="{{ data.latitude }}"
+      longitude="{{ data.longitude }}"
+      timezone="{{ data.timezone }}"
     ></app-label-card>
   </div>
 </div>
