@@ -74,4 +74,14 @@ export class SavedLocationsService {
       },
     });
   }
+
+  getsavedLocations(): Observable<{
+    status: boolean;
+    message: string;
+    data: any;
+  }> {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      baseUrl + '/location'
+    );
+  }
 }
