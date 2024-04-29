@@ -16,7 +16,7 @@
   <div class="weather-widgets wid3 rounded-xl">
     <app-single-info
       imageUrl="../../../assets/icons/wind-speed.png"
-      text="{{ curentData.wind_speed }} km/h"
+      text="{{ curentData.wind_speed }} {{ isImperial() ? 'mph' : 'km/h' }}"
     ></app-single-info>
   </div>
   <div class="weather-widgets wid4 rounded-xl">

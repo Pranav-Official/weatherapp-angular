@@ -43,7 +43,11 @@ export class HistoricalDataService {
     switch (selector) {
       case 'TEMPERATURE':
         url = baseUrl;
-        queryParams += `&daily=temperature_2m_max&timezone=${formattedTimeZone}`;
+        queryParams += `&daily=temperature_2m_max&timezone=${formattedTimeZone}${
+          localStorage.getItem('preferred_units') === 'imperial'
+            ? '&temperature_unit=fahrenheit'
+            : ''
+        }`;
         break;
       case 'HUMIDITY':
         url = baseUrl;
@@ -51,7 +55,11 @@ export class HistoricalDataService {
         break;
       case 'WIND SPEED':
         url = baseUrl;
-        queryParams += `&daily=wind_speed_10m_max&timezone=${formattedTimeZone}`;
+        queryParams += `&daily=wind_speed_10m_max&timezone=${formattedTimeZone}${
+          localStorage.getItem('preferred_units') === 'imperial'
+            ? '&wind_speed_unit=mph'
+            : ''
+        }`;
         break;
       case 'UV INDEX':
         url = uvIndexUrl;

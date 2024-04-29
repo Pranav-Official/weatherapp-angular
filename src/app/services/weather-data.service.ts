@@ -52,7 +52,14 @@ export class WeatherDataService {
     };
     return this.http.get<any>(this.weatherDataBaseUrl + 'forecast', {
       headers: headers,
-      params: params,
+      params:
+        localStorage.getItem('preferred_units') === 'imperial'
+          ? {
+              ...params,
+              temperature_unit: 'fahrenheit',
+              wind_speed_unit: 'mph',
+            } //imperial params
+          : params,
     });
   }
 
@@ -98,7 +105,14 @@ export class WeatherDataService {
     };
     return this.http.get<any>(this.weatherDataBaseUrl + 'forecast', {
       headers: headers,
-      params: params,
+      params:
+        localStorage.getItem('preferred_units') === 'imperial'
+          ? {
+              ...params,
+              temperature_unit: 'fahrenheit',
+              wind_speed_unit: 'mph',
+            } //imperial params
+          : params,
     });
   }
   getCurrentAirData(
@@ -143,7 +157,14 @@ export class WeatherDataService {
     };
     return this.http.get<any>(this.weatherDataBaseUrl + 'forecast', {
       headers: headers,
-      params: params,
+      params:
+        localStorage.getItem('preferred_units') === 'imperial'
+          ? {
+              ...params,
+              temperature_unit: 'fahrenheit',
+              wind_speed_unit: 'mph',
+            } //imperial params
+          : params,
     });
   }
 }

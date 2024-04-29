@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -15,7 +16,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   templateUrl: './login-signup.component.html',
   styleUrl: './login-signup.component.css',
   imports: [SelectorComponent, CommonModule, ReactiveFormsModule],
-  providers: [AuthenticationService],
+  providers: [],
 })
 export class LoginSignupComponent {
   signupForm!: FormGroup;
@@ -32,7 +33,8 @@ export class LoginSignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private AuthenticationService: AuthenticationService
+    private AuthenticationService: AuthenticationService,
+    private settingsService: SettingsService
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -82,6 +84,18 @@ export class LoginSignupComponent {
           (data) => {
             if (data.status) {
               localStorage.setItem('accessToken', data.data.token);
+              this.settingsService.getSettings().subscribe((data) => {
+                if (data.status) {
+                  localStorage.setItem(
+                    'save_seach_history',
+                    data.data.save_seach_history
+                  );
+                  localStorage.setItem(
+                    'preferred_units',
+                    data.data.prefrered_units
+                  );
+                }
+              });
               this.accountCreated = true;
               setTimeout(() => {
                 this.accountCreated = null;
@@ -119,8 +133,18 @@ export class LoginSignupComponent {
         (data) => {
           if (data.status) {
             localStorage.setItem('accessToken', data.data.token);
-            console.log('token', data.data.token);
-            console.log(data);
+            this.settingsService.getSettings().subscribe((data) => {
+              if (data.status) {
+                localStorage.setItem(
+                  'save_search_history',
+                  data.data.save_seach_history
+                );
+                localStorage.setItem(
+                  'preferred_units',
+                  data.data.prefrered_units
+                );
+              }
+            });
             this.success = true;
             window.location.reload();
           }

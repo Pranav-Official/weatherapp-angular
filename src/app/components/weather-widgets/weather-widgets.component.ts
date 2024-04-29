@@ -83,6 +83,13 @@ function adjustTime(time: string, utcOffset: string): string {
   providers: [WeatherDataService, WeatherIconService, TimeDataService],
 })
 export class WeatherWidgetsComponent implements OnChanges {
+  isImperial() {
+    if (localStorage.getItem('preferred_units') === 'imperial') {
+      return true;
+    } else {
+      return false;
+    }
+  }
   @Input() latitude: any;
   @Input() longitude: any;
   @Input() timezone: string = '';

@@ -8,18 +8,20 @@
   <div
     class="row-start-1 col-span-6 flex flex-col items-center mt-4 flex-nowrap"
   >
-    <p class="sunrise-time-text font-bold text-4xl">{{ temperature }}&deg;C</p>
+    <p class="sunrise-time-text font-bold text-4xl">
+      {{ temperature }}@if (isImperial()) {&deg;F} @else { &deg;C}
+    </p>
   </div>
 </div>
 <div class="grid h-3/6">
   <div class="row-start-1 col-span-8 flex flex-col items-center mt-4">
     <p class="sunrise-time-text font-normal text-lg">
-      H: {{ temperature_max }}&deg;C
+      H: {{ temperature_max }}@if (isImperial()) {&deg;F} @else { &deg;C}
     </p>
   </div>
   <div class="row-start-1 col-span-8 flex flex-col items-center mt-4">
     <p class="sunrise-time-text font-normal text-lg">
-      L: {{ temperature_min }}&deg;C
+      L: {{ temperature_min }}@if (isImperial()) {&deg;F} @else { &deg;C}
     </p>
   </div>
 </div>
