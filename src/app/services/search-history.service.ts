@@ -13,9 +13,9 @@ export class SearchHistoryService {
   saveSearchHistory(
     latitude: string,
     longitude: string,
-    timezone: string,
     name: string,
-    country: string
+    country: string,
+    timezone: string
   ): Observable<{ status: boolean; message: string }> {
     return this.http.post<{ status: boolean; message: string }>(
       baseUrl + '/searchHistory',

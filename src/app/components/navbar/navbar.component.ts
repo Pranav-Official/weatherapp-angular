@@ -1,3 +1,4 @@
+import { SearchHistoryService } from './../../services/search-history.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchLocationService } from '../../services/search-location.service';
@@ -68,6 +69,7 @@ export class NavbarComponent {
 
   constructor(
     private searchLocationService: SearchLocationService,
+    private SearchHistoryService: SearchHistoryService,
     private router: Router
   ) {}
 
@@ -97,9 +99,26 @@ export class NavbarComponent {
     country: string,
     timezone: string
   ) {
-    this.router.navigate(['/'], {
-      queryParams: { latitude, longitude, name, country, timezone },
-    });
+    if (localStorage.getItem('save_search_history') === '1') {
+      this.SearchHistoryService.saveSearchHistory(
+        latitude,
+        longitude,
+        name,
+        country,
+        timezone
+      ).subscribe((data) => {
+        if (data.status) {
+          this.router.navigate(['/'], {
+            queryParams: { latitude, longitude, name, country, timezone },
+          });
+        }
+      });
+    } else {
+      this.router.navigate(['/'], {
+        queryParams: { latitude, longitude, name, country, timezone },
+      });
+    }
+
     this.showDropdown = false;
     const inputElement = document.getElementById(
       'searchInput'
