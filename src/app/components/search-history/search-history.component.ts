@@ -78,13 +78,13 @@ export class SearchHistoryComponent implements OnInit {
     }
     if (hours > 0) {
       if (hours == 1) {
-        return hours + ' hour ago';
+        return hours + ' hr ago';
       }
       return hours + ' hrs ago';
     }
     if (minutes > 0) {
       if (minutes == 1) {
-        return minutes + ' minute ago';
+        return minutes + ' min ago';
       }
       return minutes + ' mins ago';
     }
