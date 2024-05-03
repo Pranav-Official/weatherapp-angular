@@ -15,7 +15,7 @@ export class CarouselInfoTileComponent {
       return false;
     }
   }
-  @Input() time: string = '0';
+  @Input() time: string | undefined = '0';
   @Input() weather_icon_url: string | undefined = '';
   @Input() temperature: number = 0;
   @Input() wind_speed: number = 0;
@@ -29,7 +29,7 @@ export class CarouselInfoTileComponent {
     }
   }
 
-  private formatTime(): void {
+  formatTime(): void {
     if (!this.time) return;
     const date = new Date(this.time);
     if (!isNaN(date.getTime())) {
