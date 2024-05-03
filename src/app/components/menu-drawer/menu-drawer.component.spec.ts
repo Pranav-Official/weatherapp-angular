@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { MenuDrawerComponent } from './menu-drawer.component';
 
 describe('MenuDrawerComponent', () => {
@@ -8,10 +8,9 @@ describe('MenuDrawerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuDrawerComponent]
-    })
-    .compileComponents();
-    
+      imports: [MenuDrawerComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(MenuDrawerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
