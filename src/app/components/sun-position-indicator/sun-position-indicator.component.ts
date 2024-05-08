@@ -38,7 +38,7 @@ export class SunPositionIndicatorComponent implements OnChanges {
   sunsetTime!: string;
   @Input() currentTime!: string;
 
-  sunriseTimeText!: string;
+  sunriseTimeText: string = '06:00 AM';
   sunsetTimeText!: string;
   sunProgress!: number;
 
@@ -70,7 +70,7 @@ export class SunPositionIndicatorComponent implements OnChanges {
         (parseInt(this.sunriseTime?.split(':')[0]) - 12).toString() +
         ':' +
         this.sunriseTime?.split(':')[1];
-      if (this.sunriseTimeText[0] != '0') {
+      if (this.sunriseTimeText[0] != '0' && this.sunriseTimeText[1] === ':') {
         this.sunriseTimeText = '0' + this.sunriseTimeText;
       }
       this.sunriseTimeText += ' PM';
