@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { SavedLocationsService } from './saved-locations.service';
 
 describe('SavedLocationsService', () => {
   let service: SavedLocationsService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+    });
     service = TestBed.inject(SavedLocationsService);
   });
 
