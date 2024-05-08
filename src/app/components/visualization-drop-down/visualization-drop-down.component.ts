@@ -87,12 +87,6 @@ export class VisualizationDropDownComponent {
     var targetMonth = currentDate.getMonth() - months;
     var targetYear = currentDate.getFullYear();
 
-    // Adjust the year and month if the target month is negative
-    while (targetMonth < 0) {
-      targetMonth += 12;
-      targetYear -= 1;
-    }
-
     targetDate.setFullYear(targetYear, targetMonth, currentDate.getDate());
 
     // Format the target date as yyyy-mm-dd
