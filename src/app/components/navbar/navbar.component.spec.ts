@@ -49,4 +49,10 @@ describe('NavbarComponent', () => {
     tick(11); // To Simulate passage of time by calling tick() with a delay slightly longer than the setTimeout
     expect(component.menuSelector).toBe(menuSelector);
   }));
+
+  it('should set showDropdown to false on blur', () => {
+    component.showDropdown = true;
+    component.onSearchBlur();
+    expect(component.showDropdown).toBe(false);
+  });
 });
