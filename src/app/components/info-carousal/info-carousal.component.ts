@@ -53,6 +53,7 @@ export class InfoCarousalComponent implements OnChanges {
   humidity: number[] = [];
   uv: number[] = [];
   weather_code: number[] = [];
+  day_night_status: boolean[] = [];
   forecast_days: number = 1;
   forecast_days_daily: number = 16;
 
@@ -79,6 +80,7 @@ export class InfoCarousalComponent implements OnChanges {
       relative_humidity_2m: [],
       weather_code: [],
       wind_speed_10m: [],
+      is_day: [],
     };
 
     const emptyHourlyUnits: HourlyUnits = {
@@ -235,11 +237,12 @@ export class InfoCarousalComponent implements OnChanges {
 
   getWeatherIconUrl(
     weather_icon_code: number,
-    timeObject: string
+    timeObject: string,
+    day_night_status: boolean
   ): string | undefined {
     return this.WeatherIconService.getWeatherIconUrl(
       weather_icon_code,
-      timeObject
+      day_night_status
     );
   }
 
@@ -299,6 +302,8 @@ export class InfoCarousalComponent implements OnChanges {
           this.humidity = this.weather_data.hourly.relative_humidity_2m;
           this.wind_speed = this.weather_data.hourly.wind_speed_10m;
           this.weather_code = this.weather_data.hourly.weather_code;
+          this.day_night_status = this.weather_data.hourly.is_day;
+          console.log('Is Day Status -------> ', this.day_night_status);
         },
         (error) => {
           console.log('Error while fetching Hourly Weather Data', error);
