@@ -126,8 +126,8 @@
         </button>
         <div>
           @if(wrongPassword === true){
-          <div class="alert alert-danger" role="alert">
-            ERROR WHILE CREATING A NEW ACCOUNT
+          <div class="alert alert-danger text-red-600" role="alert">
+            The passwords doesn't match.
           </div>
           } @if(accountCreated === true){
           <div class="alert alert-success" role="alert">

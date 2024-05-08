@@ -1,13 +1,10 @@
 <div
   (click)="onClickRoute()"
-  class="flex flex-row items-center gap-2 justify-between align-middle p-3 m-2 uppercase border-b border-black hover:bg-accent hover:cursor-pointer"
+  class="flex justify-between p-3 m-2 uppercase align-middle border-b border-black hover:bg-accent hover:cursor-pointer"
 >
-  <div class="flex flex-row flex-start items-center gap-3 hover:cursor-pointer">
-    <label for="location" class="font-semibold text-2xl flex-start">{{
-      name
-    }}</label>
-    <label for="country" class="">{{ country }}</label>
+  <div class="flex flex-col">
+    <label for="location" class="div1 font-bold text-xl ml-0">{{ name }}</label>
+    <label for="country" class="div2">{{ country }}</label>
   </div>
-
-  <label for="time" class="hover:cursor-pointer">{{ time }}</label>
+  <label for="time" class="hover:cursor-pointer mt-3">{{ time }}</label>
 </div>
