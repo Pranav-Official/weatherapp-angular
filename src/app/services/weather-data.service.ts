@@ -10,7 +10,8 @@ export class WeatherDataService {
   weatherDataBaseUrl = 'https://api.open-meteo.com/v1/';
   UVDataBaseUrl = 'https://air-quality-api.open-meteo.com/v1/';
   private hourlyParams = {
-    hourly: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m',
+    hourly:
+      'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,is_day',
     hourlyParamsUV: 'pm10,pm2_5,uv_index',
   };
 

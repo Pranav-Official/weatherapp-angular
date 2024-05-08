@@ -37,43 +37,21 @@ export class WeatherIconService {
     900: '../../../assets/icons/cloudy-night.png',
   };
 
-  getWeatherIconUrl = (weather_code: number, timeObject: string) => {
-    const morning_time: string = '06:45';
-    const evening_time: string = '18:30';
-
+  getWeatherIconUrl = (weather_code: number, day_night_status: boolean) => {
     if (
       (weather_code === 1 || weather_code === 2 || weather_code === 3) &&
-      timeObject
+      !day_night_status
     ) {
-      const [hours1, minutes1] = morning_time.split(':').map(Number);
-      const [hours2, minutes2] = evening_time.split(':').map(Number);
-      const [hours3, minutes3] = timeObject.split(':').map(Number);
-
-      if (hours3 < hours1 || (hours3 === hours1 && minutes3 < minutes1)) {
-        weather_code = 900;
-      } else if (
-        hours3 > hours2 ||
-        (hours3 === hours2 && minutes3 > minutes2)
-      ) {
-        weather_code = 900;
-      } else {
-        weather_code = 1;
-      }
-    } else if (weather_code === 0 && timeObject) {
-      const [hours1, minutes1] = morning_time.split(':').map(Number);
-      const [hours2, minutes2] = evening_time.split(':').map(Number);
-      const [hours3, minutes3] = timeObject.split(':').map(Number);
-
-      if (hours3 < hours1 || (hours3 === hours1 && minutes3 < minutes1)) {
-        weather_code = 800;
-      } else if (
-        hours3 > hours2 ||
-        (hours3 === hours2 && minutes3 > minutes2)
-      ) {
-        weather_code = 800;
-      } else {
-        weather_code = 0;
-      }
+      weather_code = 900; // Cloudy Night
+    } else if (weather_code === 0 && !day_night_status) {
+      weather_code = 800; // Clear Night
+    } else if (
+      (weather_code === 1 || weather_code === 2 || weather_code === 3) &&
+      day_night_status
+    ) {
+      weather_code = 1; // Cloudy Day
+    } else if (weather_code === 0 && day_night_status) {
+      weather_code = 0; // Clear Day
     }
 
     return this.weather_image_urls[weather_code] || undefined;

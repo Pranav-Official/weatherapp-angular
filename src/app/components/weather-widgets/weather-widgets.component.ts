@@ -93,6 +93,7 @@ export class WeatherWidgetsComponent implements OnChanges {
   @Input() latitude: any;
   @Input() longitude: any;
   @Input() timezone: string = '';
+  @Input() day_night_status: boolean = false;
   sunriseTimeStamp: string = '';
   sunsetTimeStamp: string = '';
 
@@ -124,7 +125,7 @@ export class WeatherWidgetsComponent implements OnChanges {
         this.curentData.weather_icon_url =
           this.weatherIconService.getWeatherIconUrl(
             parseInt(data.current.weather_code),
-            '10:00'
+            this.day_night_status
           );
         this.curentData.temperature = data.current.temperature_2m;
         this.curentData.temperature_max = data.daily.temperature_2m_max[0];
