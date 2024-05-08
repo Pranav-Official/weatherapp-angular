@@ -17,7 +17,7 @@ export class WeatherDataService {
 
   private currentParams = {
     current:
-      'temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m',
+      'temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m,is_day',
     daily: 'temperature_2m_max,temperature_2m_min,sunrise,sunset',
     forecast_days: 1,
   };
