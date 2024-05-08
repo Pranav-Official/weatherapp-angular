@@ -125,7 +125,7 @@ export class WeatherWidgetsComponent implements OnChanges {
         this.curentData.weather_icon_url =
           this.weatherIconService.getWeatherIconUrl(
             parseInt(data.current.weather_code),
-            this.day_night_status
+            data.current.is_day
           );
         this.curentData.temperature = data.current.temperature_2m;
         this.curentData.temperature_max = data.daily.temperature_2m_max[0];
