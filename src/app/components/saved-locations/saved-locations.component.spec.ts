@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { SavedLocationsComponent } from './saved-locations.component';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('SavedLocationsComponent', () => {
   let component: SavedLocationsComponent;

@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchHistoryService } from './search-history.service';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('SearchHistoryService', () => {
   let service: SearchHistoryService;

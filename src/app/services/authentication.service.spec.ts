@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 

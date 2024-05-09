@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CurrentTimeService } from './current-time.service';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('CurrentTimeService', () => {
   let service: CurrentTimeService;
