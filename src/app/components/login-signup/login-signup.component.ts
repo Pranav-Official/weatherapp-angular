@@ -122,24 +122,30 @@ export class LoginSignupComponent {
   }
 
   onSubmitLogin() {
+    console.log('Inside Function 1');
     this.submittedLogin = true;
     this.commonLogin = '';
     if (this.loginForm.valid) {
+      console.log('Inside Function 2');
       const { email, password } = this.loginForm.value;
       this.AuthenticationService.userLogin({ email, password }).subscribe(
         (data) => {
           if (data.status) {
+            console.log('Inside Function 3');
             localStorage.setItem('accessToken', data.data.token);
             this.settingsService.getSettings().subscribe((data) => {
               if (data.status) {
+                console.log('Inside Function 4', data.data.save_seach_history);
                 localStorage.setItem(
                   'save_search_history',
                   data.data.save_seach_history
                 );
+                console.log('Inside Function 5', data.data.save_seach_history);
                 localStorage.setItem(
                   'preferred_units',
                   data.data.prefrered_units
                 );
+                console.log('Inside Function 6', data.data.prefrered_units);
               }
             });
             this.success = true;
