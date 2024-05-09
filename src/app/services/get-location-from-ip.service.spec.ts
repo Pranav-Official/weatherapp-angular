@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { GetLocationFromIpService } from './get-location-from-ip.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('GetLocationFromIpService', () => {
   let service: GetLocationFromIpService;

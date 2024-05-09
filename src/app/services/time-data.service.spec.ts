@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { TimeDataService } from './time-data.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('TimeDataService', () => {
   let service: TimeDataService;

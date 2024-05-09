@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchLocationService } from './search-location.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SearchLocationService', () => {
   let service: SearchLocationService;
