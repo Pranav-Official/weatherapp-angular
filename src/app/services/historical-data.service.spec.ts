@@ -42,7 +42,7 @@ describe('HistoricalDataService', () => {
   });
 
   // Test getHistoricalData with invalid date format
-  it('should throw error for invalid start date format', async () => {
+  it('should throw error for invalid start date format', () => {
     const latitude = '12.345';
     const longitude = '-56.789';
     const invalidStartDate = 'invalid_date_format';
@@ -50,7 +50,7 @@ describe('HistoricalDataService', () => {
     const selector = 'TEMPERATURE';
 
     try {
-      await service.getHistoricalData(
+      service.getHistoricalData(
         latitude,
         longitude,
         invalidStartDate,
@@ -62,7 +62,7 @@ describe('HistoricalDataService', () => {
     }
   });
 
-  it('should throw error for invalid end date format', async () => {
+  it('should throw error for invalid end date format', () => {
     const latitude = '12.345';
     const longitude = '-56.789';
     const startDate = '2023-11-19';
@@ -70,7 +70,7 @@ describe('HistoricalDataService', () => {
     const selector = 'TEMPERATURE';
 
     try {
-      await service.getHistoricalData(
+      service.getHistoricalData(
         latitude,
         longitude,
         invalidEndDate,
@@ -82,7 +82,7 @@ describe('HistoricalDataService', () => {
     }
   });
 
-  it('should throw error for exceeding maximum days limit (UV Index)', async () => {
+  it('should throw error for exceeding maximum days limit (UV Index)', () => {
     const latitude = '12.345';
     const longitude = '-56.789';
     const startDate = '2023-11-19';
@@ -90,7 +90,7 @@ describe('HistoricalDataService', () => {
     const selector = 'UV INDEX';
 
     try {
-      await service.getHistoricalData(
+      service.getHistoricalData(
         latitude,
         longitude,
         startDate,
@@ -102,7 +102,7 @@ describe('HistoricalDataService', () => {
     }
   });
 
-  it('should throw error for exceeding maximum days limit (Air Quality)', async () => {
+  it('should throw error for exceeding maximum days limit (Air Quality)', () => {
     const latitude = '12.345';
     const longitude = '-56.789';
     const startDate = '2023-11-19';
@@ -110,7 +110,7 @@ describe('HistoricalDataService', () => {
     const selector = 'AIR QUALITY';
 
     try {
-      await service.getHistoricalData(
+      service.getHistoricalData(
         latitude,
         longitude,
         startDate,

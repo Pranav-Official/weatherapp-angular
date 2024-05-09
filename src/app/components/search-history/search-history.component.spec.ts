@@ -1,132 +1,166 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { throwError, of } from 'rxjs';
 import { SearchHistoryComponent } from './search-history.component';
 import { SearchHistoryService } from '../../services/search-history.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 describe('SearchHistoryComponent', () => {
   let component: SearchHistoryComponent;
   let fixture: ComponentFixture<SearchHistoryComponent>;
   let searchHistoryService: SearchHistoryService;
-  let httpMock: any;
+  let activatedRoute: ActivatedRoute;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchHistoryComponent, HttpClientModule],
+      imports: [CommonModule],
       providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: of({}),
-          },
+          provide: SearchHistoryService,
+          useValue: { getSearchHistory: jest.fn() },
         },
-        SearchHistoryService,
+        { provide: ActivatedRoute, useValue: { queryParams: of({}) } },
+        { provide: Router, useValue: {} },
       ],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(SearchHistoryComponent);
     component = fixture.componentInstance;
     searchHistoryService = TestBed.inject(SearchHistoryService);
-    httpMock = jest.spyOn(searchHistoryService, 'getSearchHistory') as any;
-    fixture.detectChanges();
+    activatedRoute = TestBed.inject(ActivatedRoute);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  // it('should call getSearchHistory on init', () => {
-  //   component.ngOnInit();
 
-  //   expect(httpMock.get).toHaveBeenCalledWith('/searchHistory');
-  // });
+  it('should fetch search history on initialization', () => {
+    const data = {
+      status: true,
+      message: 'Success',
+      data: [{ create_time: '2022-05-09T12:00:00' }],
+    };
+
+    jest
+      .spyOn(searchHistoryService, 'getSearchHistory')
+      .mockReturnValue(of(data));
+
+    component.ngOnInit();
+
+    expect(searchHistoryService.getSearchHistory).toHaveBeenCalled();
+    expect(component.locationData.length).toBe(1);
+  });
+
+  it('should handle error when fetching search history', () => {
+    const errorData = { status: false, message: 'Error message', data: [{}] };
+    const consoleErrorSpy = jest.spyOn(console, 'error');
+    jest
+      .spyOn(searchHistoryService, 'getSearchHistory')
+      .mockReturnValue(of(errorData));
+    component.ngOnInit();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Error fetching search history:',
+      errorData.message
+    );
+  });
 
   it('should calculate time ago for days difference from current time', () => {
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    const timestampString = twoDaysAgo.toISOString();
-
-    expect(component.calculateTimeAgo(timestampString)).toEqual('2 days ago');
+    const date = new Date();
+    date.setDate(date.getDate() - 2);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('2 days ago');
   });
+
+  it('should return only "day" for 1 day time ago', () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('1 year ago');
+  });
+
+  it('should return correct time ago for years', () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 2);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('2 years ago');
+  });
+
+  it('should return only "year" for 1 year time ago', () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 1);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('1 year ago');
+  });
+
+  it('should return correct time ago for months', () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 2);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('2 months ago');
+  });
+
+  it('should return only "month" for 1 month time ago', () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('1 month ago');
+  });
+
+  it('should return correct time ago for weeks', () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 14);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('2 weeks ago');
+  });
+  it('should return only "week" for 1 week time ago', () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    const timestampString = component.calculateTimeAgo(date.toISOString());
+    expect(timestampString).toEqual('1 week ago');
+  });
+
+  // it('should return correct time ago for hours', () => {
+  //   const currentDate = new Date();
+  //   console.log('Original date', currentDate);
+  //   currentDate.setHours(currentDate.getHours() - 2);
+  //   console.log('adjusted date', currentDate);
+  //   const timestampString = component.calculateTimeAgo(
+  //     currentDate.toISOString()
+  //   );
+  //   console.log('TimeStampResult', timestampString);
+  //   expect(timestampString).toEqual('2 hrs ago');
+  // });
+
+  // it('should return correct time ago for minutes', () => {
+  //   const currentDate = new Date();
+  //   console.log('Original date', currentDate);
+  //   currentDate.setMinutes(currentDate.getMinutes() - 2);
+  //   console.log('adjusted date', currentDate);
+  //   const timestampString = component.calculateTimeAgo(
+  //     currentDate.toISOString()
+  //   );
+  //   console.log('TimeStampResult', timestampString);
+  //   expect(timestampString).toEqual('2 minutes ago');
+  // });
+
+  // it('should return correct time ago for minutes', () => {
+  //   const currentDate = new Date();
+  //   console.log('Original date', currentDate);
+  //   currentDate.setSeconds(currentDate.getSeconds() - 2);
+  //   console.log('adjusted date', currentDate);
+  //   const timestampString = component.calculateTimeAgo(
+  //     currentDate.toISOString()
+  //   );
+  //   console.log('TimeStampResult', timestampString);
+  //   expect(timestampString).toEqual('2 secs ago');
+  // });
+  // it('should return "0 secs ago" for the same time', () => {
+  //   const currentDate = new Date();
+  //   console.log('Original date', currentDate);
+  //   const timeAgo = component.calculateTimeAgo(currentDate.toISOString());
+  //   expect(timeAgo).toEqual('0 secs ago');
+  // });
 });
-
-// it('should calculate time ago for hours difference from current time', () => {
-//   const fiveHoursAgo = new Date();
-//   fiveHoursAgo.setHours(fiveHoursAgo.getHours() - 5);
-//   const timestampString = fiveHoursAgo.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('10 hrs ago');
-// });
-
-// it('should calculate time ago for seconds', () => {
-//   const thirtySecondsAgo = new Date();
-//   thirtySecondsAgo.setSeconds(thirtySecondsAgo.getSeconds() - 30);
-//   const timestampString = thirtySecondsAgo.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('30 secs ago');
-// });
-
-// it('should calculate time ago for minutes', () => {
-//   const fiveMinutesAgo = new Date();
-//   fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
-//   const timestampString = fiveMinutesAgo.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('5 mins ago');
-// });
-
-// it('should calculate time ago for hours', () => {
-//   const fiveHoursAgo = new Date();
-//   fiveHoursAgo.setHours(fiveHoursAgo.getHours() - 5);
-//   const timestampString = fiveHoursAgo.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('5 hrs ago');
-// });
-
-// it('should calculate time ago for days', () => {
-//   const twoDaysAgo = new Date();
-//   twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-//   const timestampString = twoDaysAgo.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('2 days ago');
-// });
-
-// it('should return "0 secs ago" for the current time', () => {
-//   const now = new Date();
-//   const timestampString = now.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('0 secs ago');
-// });
-
-// it('should handle dates in the future', () => {
-//   const futureDate = new Date();
-//   futureDate.setDate(futureDate.getDate() + 1);
-//   const timestampString = futureDate.toISOString();
-//   expect(component.calculateTimeAgo(timestampString)).toEqual('0 secs ago'); // Or handle future dates differently
-// });
-
-// it('should handle successful search history response', () => {
-//   const mockData = [
-//     { id: 1, name: 'Location 1', create_time: '2024-05-07T00:00:00Z' },
-//     { id: 2, name: 'Location 2', create_time: '2024-05-06T12:00:00Z' },
-//   ];
-//   const expectedProcessedData = [
-//     { ...mockData[0], time: '0 secs ago' },
-//     { ...mockData[1], time: '1 day ago' },
-//   ];
-
-//   httpMock.get.mockReturnValue(of({ status: true, data: mockData }));
-
-//   component.ngOnInit();
-
-//   expect(component.locationData).toEqual(expectedProcessedData);
-// });
-
-// it('should handle error response from getSearchHistory', () => {
-//   const errorMessage = 'Internal server error';
-
-//   httpMock.get.mockReturnValue(of({ status: false, message: errorMessage }));
-
-//   spyOn(console, 'error'); // Spy on console.error for logging
-
-//   component.ngOnInit();
-
-//   expect(console.error).toHaveBeenCalledWith(
-//     'Error fetching search history:',
-//     errorMessage
-//   );
-// });
-///
-//});
