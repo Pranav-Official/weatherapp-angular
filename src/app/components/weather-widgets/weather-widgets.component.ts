@@ -47,7 +47,6 @@ type CurrentWeatherData = {
     CommonModule,
     HttpClientModule,
   ],
-  providers: [WeatherDataService, WeatherIconService, TimeDataService],
 })
 export class WeatherWidgetsComponent implements OnChanges {
   isImperial() {

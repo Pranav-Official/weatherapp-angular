@@ -25,6 +25,8 @@ export class TimeDataService {
   constructor(private http: HttpClient) {}
 
   getTimeData(timezone: string) {
-    return this.http.get<TimeDateResponse>(this.timeDataBaseUrl + timezone);
+    return this.http.get<{ datetime: string; utc_offset: string }>(
+      this.timeDataBaseUrl + timezone
+    );
   }
 }
