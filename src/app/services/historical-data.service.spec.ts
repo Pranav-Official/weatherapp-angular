@@ -1,23 +1,3 @@
-// import { TestBed } from '@angular/core/testing';
-
-// import { HistoricalDataService } from './historical-data.service';
-// import { HttpClientModule } from '@angular/common/http';
-
-// describe('HistoricalDataService', () => {
-//   let service: HistoricalDataService;
-
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [HttpClientModule],
-//     });
-//     service = TestBed.inject(HistoricalDataService);
-//   });
-
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
-
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HistoricalDataService } from './historical-data.service';
@@ -141,52 +121,4 @@ describe('HistoricalDataService', () => {
       expect(error.message).toEqual('Maximum number of days is 92'); // Check for specific error message
     }
   });
-
-  // it('should calculate the correct number of days between valid dates', () => {
-  //   const startDateStr = '2023-11-19';
-  //   const endDateStr = '2023-11-20';
-  //   const expectedDays = 1;
-
-  //   const days = service.daysBetween(startDateStr, endDateStr);
-
-  //   expect(days).toBe(expectedDays);
-  // });
-
-  // it('should return null for invalid start date', () => {
-  //   const startDateStr = 'invalid_date_format';
-  //   const endDateStr = '2023-11-20';
-
-  //   const days = service.getHistoricalData.daysBetween(
-  //     startDateStr,
-  //     endDateStr
-  //   );
-
-  //   expect(days).toBeNull();
-  // });
-
-  // it('should return null for invalid end date', () => {
-  //   const startDateStr = '2023-11-19';
-  //   const endDateStr = 'invalid_date_format';
-
-  //   const days = service.getHistoricalData.daysBetween(
-  //     startDateStr,
-  //     endDateStr
-  //   );
-
-  //   expect(days).toBeNull();
-  // });
-
-  // it('should calculate days correctly considering leap year', () => {
-  //   const startDateStr = '2024-02-29'; // Leap year - February 29th exists
-  //   const endDateStr = '2024-03-02';
-
-  //   const expectedDays = 2;
-
-  //   const days = service.getHistoricalData.daysBetween(
-  //     startDateStr,
-  //     endDateStr
-  //   );
-
-  //   expect(days).toBe(expectedDays);
-  // });
 });
