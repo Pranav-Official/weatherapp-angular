@@ -1,6 +1,6 @@
 import { EnvironmentInjector, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 const baseUrl = 'https://archive-api.open-meteo.com/v1/archive';
 const airQualityUrl = 'https://air-quality-api.open-meteo.com/v1/air-quality';
@@ -62,7 +62,7 @@ export class HistoricalDataService {
       case 'UV INDEX':
         url = uvIndexUrl;
         if (numberOfDays && numberOfDays > 92) {
-          return throwError({
+          return of({
             error: true,
             message: 'Maximum number of days is 92',
           });
@@ -72,7 +72,7 @@ export class HistoricalDataService {
       case 'AIR QUALITY':
         url = airQualityUrl;
         if (numberOfDays && numberOfDays > 92) {
-          return throwError({
+          return of({
             error: true,
             message: 'Maximum number of days is 92',
           });
@@ -81,7 +81,7 @@ export class HistoricalDataService {
         break;
       default:
         console.log('Error', selector);
-        return throwError('Invalid selector');
+        return of({ error: true, message: 'Invalid selector' });
     }
     return this.http.get<any>(`${url}?${queryParams}`);
   }

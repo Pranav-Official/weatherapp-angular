@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { SavedLocationsService } from './saved-locations.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavedLocationsService', () => {
   let service: SavedLocationsService;

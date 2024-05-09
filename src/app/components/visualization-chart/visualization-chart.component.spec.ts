@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VisualizationChartComponent } from './visualization-chart.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('VisualizationCartComponent', () => {
   let component: VisualizationChartComponent;
@@ -8,7 +9,7 @@ describe('VisualizationCartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VisualizationChartComponent],
+      imports: [VisualizationChartComponent, HttpClientModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VisualizationChartComponent);
