@@ -33,39 +33,6 @@ type CurrentWeatherData = {
   weather_icon_url: string | undefined;
 };
 
-function adjustTime(time: string, utcOffset: string): string {
-  // Split the time and offset into hours and minutes
-  const [timeHours, timeMinutes] = time.split(':').map(Number);
-  const offsetSign = utcOffset[0];
-  const [offsetHours, offsetMinutes] = utcOffset
-    .slice(1)
-    .split(':')
-    .map(Number);
-  // Convert time to minutes
-  let totalMinutes = timeHours * 60 + timeMinutes;
-
-  // Adjust time based on offset
-  if (offsetSign === '-') {
-    totalMinutes -= offsetHours * 60 + offsetMinutes;
-  } else {
-    totalMinutes += offsetHours * 60 + offsetMinutes;
-  }
-
-  // Ensure time is within 24 hours
-  totalMinutes = (totalMinutes + 1440) % 1440;
-
-  // Convert back to hours and minutes
-  const adjustedHours = Math.floor(totalMinutes / 60);
-  const adjustedMinutes = totalMinutes % 60;
-
-  // Format adjusted time
-  const adjustedTime = `${adjustedHours
-    .toString()
-    .padStart(2, '0')}:${adjustedMinutes.toString().padStart(2, '0')}`;
-
-  return adjustedTime;
-}
-
 @Component({
   selector: 'app-weather-widgets',
   standalone: true,

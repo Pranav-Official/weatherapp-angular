@@ -65,7 +65,7 @@ describe('VisualizationDropDownComponent', () => {
     expect(component.dateContext).toBe(0);
   });
 
-  it('should set placeholder if fuction is called', () => {
+  it('should set placeholder if function is called', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     textField.value = 'sad';
@@ -75,28 +75,28 @@ describe('VisualizationDropDownComponent', () => {
     expect(textField.placeholder).toBe('test');
   });
 
-  it('should set suggestion of days if fuction is called', () => {
-    const textField =
-      fixture.debugElement.nativeElement.querySelector('#rangePicker');
-    component.dateContext = 3;
-    const spy = jest.spyOn(component.rangeSelector, 'emit');
-    component.setDateRangeFromWeeks();
-
-    expect(spy).toHaveBeenCalledWith('DAYS');
-    expect(textField.placeholder).toBe('3 Days');
-  });
-  it('should set suggestion of weeks if fuction is called', () => {
+  it('should set suggestion of days if function is called', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 3;
     const spy = jest.spyOn(component.rangeSelector, 'emit');
     component.setDateRangeFromDays();
 
+    expect(spy).toHaveBeenCalledWith('DAYS');
+    expect(textField.placeholder).toBe('3 Days');
+  });
+  it('should set suggestion of weeks if function is called', () => {
+    const textField =
+      fixture.debugElement.nativeElement.querySelector('#rangePicker');
+    component.dateContext = 3;
+    const spy = jest.spyOn(component.rangeSelector, 'emit');
+    component.setDateRangeFromWeeks();
+
     expect(spy).toHaveBeenCalledWith('WEEKS');
     expect(textField.placeholder).toBe('3 Weeks');
   });
 
-  it('should set suggestion of months if fuction is called', () => {
+  it('should set suggestion of months if function is called', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 3;
@@ -106,7 +106,7 @@ describe('VisualizationDropDownComponent', () => {
     expect(spy).toHaveBeenCalledWith('MONTHS');
     expect(textField.placeholder).toBe('3 Months');
   });
-  it('should set suggestion of years if fuction is called', () => {
+  it('should set suggestion of years if function is called', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 3;
@@ -117,28 +117,28 @@ describe('VisualizationDropDownComponent', () => {
     expect(textField.placeholder).toBe('3 Years');
   });
 
-  it('should set suggestion of days if fuction is called with 1', () => {
-    const textField =
-      fixture.debugElement.nativeElement.querySelector('#rangePicker');
-    component.dateContext = 1;
-    const spy = jest.spyOn(component.rangeSelector, 'emit');
-    component.setDateRangeFromWeeks();
-
-    expect(spy).toHaveBeenCalledWith('DAYS');
-    expect(textField.placeholder).toBe('1 Day');
-  });
-  it('should set suggestion of weeks if fuction is called with 1', () => {
+  it('should set suggestion of days if function is called with 1', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 1;
     const spy = jest.spyOn(component.rangeSelector, 'emit');
     component.setDateRangeFromDays();
 
+    expect(spy).toHaveBeenCalledWith('DAYS');
+    expect(textField.placeholder).toBe('1 Day');
+  });
+  it('should set suggestion of weeks if function is called with 1', () => {
+    const textField =
+      fixture.debugElement.nativeElement.querySelector('#rangePicker');
+    component.dateContext = 1;
+    const spy = jest.spyOn(component.rangeSelector, 'emit');
+    component.setDateRangeFromWeeks();
+
     expect(spy).toHaveBeenCalledWith('WEEKS');
     expect(textField.placeholder).toBe('1 Week');
   });
 
-  it('should set suggestion of months if fuction is called with 1', () => {
+  it('should set suggestion of months if function is called with 1', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 1;
@@ -146,9 +146,9 @@ describe('VisualizationDropDownComponent', () => {
     component.setDateRangeFromMonths();
 
     expect(spy).toHaveBeenCalledWith('MONTHS');
-    expect(textField.placeholder).toBe('1 Month1');
+    expect(textField.placeholder).toBe('1 Month');
   });
-  it('should set suggestion of years if fuction is called with 1', () => {
+  it('should set suggestion of years if function is called with 1', () => {
     const textField =
       fixture.debugElement.nativeElement.querySelector('#rangePicker');
     component.dateContext = 1;
