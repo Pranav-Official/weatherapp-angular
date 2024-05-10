@@ -78,7 +78,7 @@ describe('SearchHistoryComponent', () => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
     const timestampString = component.calculateTimeAgo(date.toISOString());
-    expect(timestampString).toEqual('1 year ago');
+    expect(timestampString).toEqual('1 day ago');
   });
 
   it('should return correct time ago for years', () => {
