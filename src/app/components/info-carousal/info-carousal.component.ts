@@ -237,7 +237,6 @@ export class InfoCarousalComponent implements OnChanges {
 
   getWeatherIconUrl(
     weather_icon_code: number,
-    timeObject: string,
     day_night_status: boolean
   ): string | undefined {
     return this.WeatherIconService.getWeatherIconUrl(
