@@ -15,4 +15,16 @@ describe('SearchLocationService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should set location correctly', () => {
+    const latitude = '12.345';
+    const longitude = '67.890';
+    jest.spyOn(service, 'setLocation').mockImplementation((lat, long) => {
+      service.latitude = lat;
+      service.longitude = long;
+    });
+    service.setLocation(latitude, longitude);
+    expect(service.latitude).toEqual(latitude);
+    expect(service.longitude).toEqual(longitude);
+  });
 });
